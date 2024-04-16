@@ -54,10 +54,12 @@ public class ATMTest {
     	
     	// ----- these two tests works
     	
+    	//register a new user
     	atm.registerUser("john_doe", "password123", "123456");
         assertTrue(outContent.toString().contains("User registered successfully."));
         outContent.reset();
 
+        //register an existing user
         atm.registerUser("john_doe", "password123", "123456");
         assertTrue(outContent.toString().contains("Username already exists. Please choose another one."));
         outContent.reset();
