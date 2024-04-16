@@ -1,0 +1,37 @@
+package lab6;
+import java.util.*;
+
+public class BankAccount {
+	private double balance;
+	private double dailyDepositLimit;
+	private double dailyWithdrawalLimit;
+
+	public BankAccount(double balance, double dailyDepositLimit, double dailyWithdrawalLimit) {
+        this.balance = balance;
+        this.dailyDepositLimit = dailyDepositLimit;
+        this.dailyWithdrawalLimit = dailyWithdrawalLimit;
+    }
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void deposit(double amount) {
+		if (amount <= dailyDepositLimit) {
+	        balance += amount;
+	        System.out.println("Deposit successful. New balance: $" + balance);
+	    } else {
+	    	System.out.println("Deposit amount exceeds daily limit.");
+	    }
+	
+	}
+	public void withdraw(double amount) {
+        if (amount <= dailyWithdrawalLimit && amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawal successful. New balance: $" + balance);
+        } else {
+            System.out.println("Withdrawal amount exceeds daily limit or insufficient funds.");
+        }
+    }
+	
+}

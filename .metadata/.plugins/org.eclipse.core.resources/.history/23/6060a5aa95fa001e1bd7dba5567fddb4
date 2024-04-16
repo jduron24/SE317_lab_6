@@ -1,0 +1,54 @@
+package lab6;
+import java.util.*;
+
+//Main ATM class
+public class ATM {
+ private Map<String, User> users;
+
+ public ATM() {
+     this.users = new HashMap<>();
+ }
+
+ public void registerUser(String username, String password) {
+     if (!users.containsKey(username)) {
+         users.put(username, new User(username, password));
+         System.out.println("User registered successfully.");
+     } else {
+         System.out.println("Username already exists. Please choose another one.");
+     }
+ }
+
+ public void login(String username, String password) {
+     if (users.containsKey(username)) {
+         User user = users.get(username);
+         if (user != null && user.password.equals(password)) {
+             System.out.println("Login successful.");
+             // Proceed with account operations
+         } else {
+             System.out.println("Invalid password.");
+         }
+     } else {
+         System.out.println("User not found. Please register.");
+     }
+ }
+
+ public static void main(String[] args) {
+     ATM atm = new ATM();
+     String userName;
+     String password;
+     Scanner userInput = new Scanner(System.in);  // Create a Scanner object
+     
+     System.out.println("Create a new account Enter user name: ");
+     userName = userInput.nextLine();
+     
+     
+//     atm.registerUser("user1", "password");
+//     atm.login("user1", "password");
+//
+//     // Example usage
+//     User user = atm.users.get("user1");
+//     BankAccount checkingAccount = user.getCheckingAccount();
+//     checkingAccount.deposit(3000);
+//     checkingAccount.withdraw(700);
+ }
+}

@@ -1,0 +1,38 @@
+package lab6;
+import java.util.*;
+
+class User {
+    private BankAccount checkingAccount;
+    private BankAccount savingAccount;
+    private String username;
+    String password;
+    String pin;
+
+    public User(String username, String password, String pin) {
+        this.username = username;
+        this.password = password;
+        this.pin = pin;
+        this.checkingAccount = new BankAccount(0, 5000, 500);
+        this.savingAccount = new BankAccount(0, 5000, 0);
+    }
+
+    public BankAccount getCheckingAccount() {
+        return checkingAccount;
+    }
+    public void withdrawFromCheckings(double amount) {
+        checkingAccount.withdraw(amount);
+    }
+    public BankAccount getSavingAccount() {
+        return savingAccount;
+    }
+    public void depositToChecking(double amount) {
+        checkingAccount.deposit(amount);
+    }
+    public void depositToSaving(double amount) {
+        savingAccount.deposit(amount);
+    }
+    public void transferCheckingsToSavings(double amount) {
+    	
+    }
+    
+}

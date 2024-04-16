@@ -1,0 +1,39 @@
+# ATM System
+
+This is a simple ATM (Automated Teller Machine) system implemented in Java. 
+It allows users to register, login, and perform various banking operations such as deposit, 
+withdrawal, and transfer between checking and savings accounts.
+
+## Classes
+
+### 1. ATM.java
+
+This class represents the main entry point of the ATM system. It contains 
+the `main` method and orchestrates user registration, login, and account operations.
+
+### 2. User.java
+
+The `User` class represents a user of the ATM system. It contains methods 
+for managing user accounts, such as depositing, withdrawing, and transferring 
+money between checking and savings accounts.
+
+### 3. BankAccount.java
+
+The `BankAccount` class represents a bank account, including checking and 
+savings accounts. It provides methods for depositing, withdrawing, and 
+transferring money between accounts.
+
+## Usage
+
+To use the ATM system:
+
+1. Run the `ATM.java` file.
+2. Choose whether to sign up or log in.
+3. Follow the prompts to perform banking operations such as deposit, 
+withdrawal, transfer, and checking account balances.
+
+## Notes
+
+- The ATM system uses basic console input/output for user interaction.
+- User data is stored in memory and not persisted across sessions.
+- This implementation is for educational purposes and may not be suitable for production use.

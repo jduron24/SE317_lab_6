@@ -1,0 +1,155 @@
+package lab6;
+import java.util.*;
+
+//Main ATM class
+public class ATM {
+ private Map<String, User> users;
+
+ public ATM() {
+     this.users = new HashMap<>();
+ }
+
+ public void registerUser(String username, String password,String pin) {
+     if (!users.containsKey(username)) {
+         users.put(username, new User(username, password, pin));
+         System.out.println("User registered successfully.");
+     } else {
+         System.out.println("Username already exists. Please choose another one.");
+     }
+ }
+
+ public void login(String username, String password) {
+     if (users.containsKey(username)) {
+         User user = users.get(username);
+         if (user != null && user.password.equals(password) || user.pin.equals(password)) {
+             System.out.println("Login successful.");
+             userChoice(user);
+             // Proceed with account operations
+         } else {
+             System.out.println("Invalid password.");
+         }
+     } else {
+         System.out.println("User not found. Please register.");
+     }
+ }
+
+ public static String generateSixDigitString() {
+     Random random = new Random();
+     StringBuilder sb = new StringBuilder();
+     for (int i = 0; i < 6; i++) {
+         sb.append(random.nextInt(10)); // Append a random digit (0-9)
+     }
+     return sb.toString();
+ }
+ 
+ public static void loginCredentials(ATM atm) {
+	 String userName;
+	 String password;
+	 Scanner userInput = new Scanner(System.in);
+	 System.out.println("Enter userName or 6 digit code");
+	 userName = userInput.nextLine();
+	 System.out.println("Enter password");
+	 password = userInput.nextLine();
+	 atm.login(userName,password);
+	 
+ }
+ public static void userChoice(User user) {
+	 String input;
+	 Scanner userInput = new Scanner(System.in);
+	 
+	 System.out.println("Checkings(c) \n Savings(s) \n Logout(l)");
+	 input = userInput.nextLine();
+	 
+	
+	 while (!input.equals("l")){
+		 if(input.equals("c")) {
+			 // go to checkings functionality
+			 checkingsFunctionality(user);
+		 }
+		 else if (input.equals("s")) {
+			 // go to saving functionality
+		 }
+		 
+		 System.out.println("\n Checkings(c) \n Savings(s) \n Logout(l)");
+		 input = userInput.nextLine();
+	 }
+ }
+
+public static void checkingsFunctionality(User userBankAccount) {
+	String input;
+	Scanner userInput = new Scanner(System.in);
+	
+	System.out.println("\n Checkings account");
+	System.out.println("Deposit(d)");
+	System.out.println("Withdraw(w)");
+	System.out.println("Transfer(t)");
+	System.out.println("Get balance(b)");
+	
+	input = userInput.nextLine();//get user input 
+	switch(input) {
+	case "d":
+		String depositAmount;
+		System.out.println("deposit \n");
+		System.out.println("Deposit amount:");
+		depositAmount = userInput.nextLine();
+		userBankAccount.depositToChecking(Integer.parseInt(depositAmount));// deposits money to checkings account
+		System.out.println(userBankAccount.getCheckingAccount());
+		break;
+	case "w":
+		System.out.println("withdraw");
+		break;
+	case "t":
+		System.out.println("transfer");
+		break;
+	case "b":
+		System.out.println("get balance");
+		break;
+	default:
+		System.out.println("Try again");
+	}
+	
+		
+	
+	
+}// left off trying to figure out the different functionality for the atm machine 
+
+
+ public static void main(String[] args) {
+     ATM atm = new ATM();
+     String userName;
+     String password;
+     String pin = generateSixDigitString();
+     Scanner userInput = new Scanner(System.in);  // Create a Scanner object
+     String sOrl;
+     System.out.println("Create a new account Enter user name: ");
+     userName = userInput.nextLine();
+ 
+     System.out.println("Enter a password");
+     password = userInput.nextLine();
+     
+     System.out.println("Your unique pin #: " + pin);
+     
+     atm.registerUser(userName,password,pin); // register new user to the system
+     
+     
+     // while loop that runs forever here
+     System.out.println("Sign-un(s) or login(l)");
+     sOrl = userInput.nextLine();
+     
+     if(sOrl.equals("l")) {
+    	 loginCredentials(atm);
+     }
+     else if(sOrl.equals("s")) {
+    	 
+     }
+     
+//     atm.registerUser("user1", "password");
+//     atm.login("user1", "password");
+//
+//     // Example usage
+//     User user = atm.users.get("user1");
+//     BankAccount checkingAccount = user.getCheckingAccount();
+//     checkingAccount.deposit(3000);
+//     checkingAccount.withdraw(700);
+ }
+}
