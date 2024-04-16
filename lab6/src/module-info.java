@@ -6,4 +6,5 @@
  *
  */
 module lab6 {
+	 requires org.junit.jupiter.api;
 }
