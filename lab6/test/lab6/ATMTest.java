@@ -177,7 +177,12 @@ public class ATMTest {
         atm.registerUser(null, "pass2", "pin2");
         assertNull(atm.getUser(null), "Retrieving a null user should return null despite multiple accounts.");
 
-
+        // Null single element for user account
+        atm.registerUser("user2", null, "pin3");
+        assertNotNull(atm.getUser("user2"), "User with null password should still be retrievable.");
+        assertEquals(atm.getUser("user2").getPassword(), null, "Password for user2 should be null.");
+        
+        
     	
     }
     
