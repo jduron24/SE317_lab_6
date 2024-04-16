@@ -18,6 +18,11 @@ public class ATM {
          System.out.println("Username already exists. Please choose another one.");
      }
  }
+ 
+ public User getUser(String username) {
+	    return users.get(username);
+	}
+ 
 //Method to login with username/password or pin
  public void login(String username, String password) { 
 	 boolean loggedIn = false;
