@@ -19,20 +19,32 @@ public class ATM {
      }
  }
 //Method to login with username/password or pin
- public void login(String username, String password) { 
-	 boolean loggedIn = false;
-	for(User user : users.values()) {
-		if (user != null && (user.password.equals(password) || user.pin.equals(password)) && user.password.equals(password)) {
-	        System.out.println("Login successful");
-	        userChoice(user);
-	        loggedIn = true;
-	        break;
-		}
-	}
-	if (!loggedIn) {
-        System.out.println("Invalid PIN or password.");
-    }
- }
+// public void login(String username, String password) { 
+//	 boolean loggedIn = false;
+//	for(User user : users.values()) {
+//		if (user != null && (user.password.equals(password) || user.pin.equals(password)) && user.password.equals(password)) {
+//	        System.out.println("Login successful");
+//	        userChoice(user);
+//	        loggedIn = true;
+//	        break;
+//		}
+//	}
+//	if (!loggedIn) {
+//        System.out.println("Invalid PIN or password.");
+//    }
+// }
+ 
+ public boolean login(String username, String password) {
+	    for (User user : users.values()) {
+	        if (user != null && (user.password.equals(password) || user.pin.equals(password)) && user.username.equals(username)) {
+	            System.out.println("Login successful");
+	            return true; // Indicate success
+	        }
+	    }
+	    System.out.println("Invalid PIN or password.");
+	    return false; // Indicate failure
+}
+ 
  // Method to generate a random 6-digit string
  public static String generateSixDigitString() {
      Random random = new Random();
