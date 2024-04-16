@@ -125,9 +125,7 @@ public class ATMTest {
         assertTrue(outContent.toString().contains("User registered successfully"));
         outContent.reset();
         
-
-        
-        
+ 
         // Login to utility company account - we simulate by logging in
         atm.login("utility_user", "utility_pass");
 //      assertTrue(outContent.toString().contains("Login successful"));
@@ -136,20 +134,16 @@ public class ATMTest {
         assertFalse(outContent.toString().contains("Login successful"));
         outContent.reset();
 
+        
         // Check bill payment history - we simulate by checking the transactions or interactions
         // Assuming a method exists to get transaction history, since it's not in provided code
         // For now, we'll just assume the functionality exists.
-        
-        
         
         // --- WORKS with 2nd refactor login code ---
         user.depositToChecking(500); // Simulate a transaction (like paying a bill)
         assertTrue(outContent.toString().contains("Deposit successful"));
         outContent.reset();
 
-        
-        
-        
         
         
         // Check next bill payment amount and due date
