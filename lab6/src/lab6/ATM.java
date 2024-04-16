@@ -10,29 +10,72 @@ public class ATM {
 	     this.users = new HashMap<>();
  }
 // Method to register a new user
- public void registerUser(String username, String password,String pin) {
-     if (!users.containsKey(username)) {
-         users.put(username, new User(username, password, pin));
-         System.out.println("User registered successfully.");
-     } else {
-         System.out.println("Username already exists. Please choose another one.");
-     }
- }
-//Method to login with username/password or pin
- public void login(String username, String password) { 
-	 boolean loggedIn = false;
-	for(User user : users.values()) {
-		if (user != null && (user.password.equals(password) || user.pin.equals(password)) && user.password.equals(password)) {
-	        System.out.println("Login successful");
-	        userChoice(user);
-	        loggedIn = true;
-	        break;
-		}
+// public void registerUser(String username, String password,String pin) {
+//     if (!users.containsKey(username)) {
+//         users.put(username, new User(username, password, pin));
+//         System.out.println("User registered successfully.");
+//     } else {
+//         System.out.println("Username already exists. Please choose another one.");
+//     }
+// }
+ 
+ //1st refactor
+ public void registerUser(String username, String password, String pin) {
+	    if (username == null || username.isEmpty()) {
+	        System.out.println("Invalid username. Cannot register user.");
+	        return;
+	    }
+	    if (users.containsKey(username)) {
+	        System.out.println("Username already exists. Please choose another one.");
+	    } else {
+	        users.put(username, new User(username, password, pin));
+	        System.out.println("User registered successfully.");
+	    }
 	}
-	if (!loggedIn) {
-        System.out.println("Invalid PIN or password.");
-    }
- }
+ 
+ 
+ public User getUser(String username) {
+	    return users.get(username);
+	}
+ 
+//Method to login with username/password or pin
+// public void login(String username, String password) { 
+//	 boolean loggedIn = false;
+//	for(User user : users.values()) {
+//		if (user != null && (user.password.equals(password) || user.pin.equals(password)) && user.password.equals(password)) {
+//	        System.out.println("Login successful");
+//	        userChoice(user);
+//	        loggedIn = true;
+//	        break;
+//		}
+//	}
+//	if (!loggedIn) {
+//        System.out.println("Invalid PIN or password.");
+//    }
+// }
+ 
+ //2nd refactor
+public boolean login(String username, String password) {
+	    for (User user : users.values()) {
+	        if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+	            return true; // Login successful
+	        }
+	    }
+	    return false; // Login failed
+	}
+ 
+ //1st refactor
+// public boolean login(String username, String password) {
+//	    for (User user : users.values()) {
+//	        if (user != null && (user.password.equals(password) || user.pin.equals(password)) && user.username.equals(username)) {
+//	            System.out.println("Login successful");
+//	            return true; // Indicate success
+//	        }
+//	    }
+//	    System.out.println("Invalid PIN or password.");
+//	    return false; // Indicate failure
+//}
+ 
  // Method to generate a random 6-digit string
  public static String generateSixDigitString() {
      Random random = new Random();
