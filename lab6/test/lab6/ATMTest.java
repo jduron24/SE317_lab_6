@@ -18,6 +18,7 @@ public class ATMTest {
     @Test
     public void testUserRegistrationAndLogin() {
     	
+    	
         // Test user registration and login functionalities
         // Test cases: register new user, register existing user, login with valid credentials,
         // login with invalid credentials
