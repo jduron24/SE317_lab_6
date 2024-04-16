@@ -51,4 +51,14 @@ class User {
     public String toString() {
         return "Username: " + username + ", Password: " + password + ", PIN: " + pin;
     }
+    
+    // Getters for username and password
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+    
 }
