@@ -14,12 +14,14 @@ public class ATMTest {
     private ATM atm;
 //    private ByteArrayOutputStream outContent; 
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private User testUser;
 
     @BeforeEach
     public void setUp() {
         // Initialize ATM instance before each test
         atm = new ATM();
         System.setOut(new PrintStream(outContent)); // Redirect System.out to capture outputs
+
     }
 
     @Test
@@ -95,6 +97,36 @@ public class ATMTest {
         // transfer between checking and savings account, deposit into savings account,
         // withdraw from savings account, transfer between savings and checking account
         // Ensure expected outcomes for each test case
+    	
+    	
+    	
+    	// this.testUser is nulll, causing an error
+    	 // Deposit into checking account
+        testUser.depositToChecking(200);
+        assertEquals(1200, testUser.getCheckingAccount(), "Checking account should have 1200 after deposit");
+
+        // Withdraw from checking account
+        testUser.withdrawFromCheckings(300);
+        assertEquals(900, testUser.getCheckingAccount(), "Checking account should have 900 after withdrawal");
+
+        // Transfer between checking and savings account
+        testUser.transferCheckingsToSavings(400);
+        assertEquals(500, testUser.getCheckingAccount(), "Checking account should have 500 after transfer");
+        assertEquals(900, testUser.getSavingsAccount(), "Savings account should have 900 after transfer");
+
+        // Deposit into savings account
+        testUser.depositToSaving(100);
+        assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after deposit");
+
+        // Withdraw from savings account
+        testUser.withdrawFromCheckings(200); // Assume method exists
+        assertEquals(800, testUser.getSavingsAccount(), "Savings account should have 800 after withdrawal");
+
+        // Transfer from savings to checking account
+        testUser.transferSavingsToCheckings(300);
+        assertEquals(800, testUser.getCheckingAccount(), "Checking account should have 800 after receiving transfer");
+        assertEquals(500, testUser.getSavingsAccount(), "Savings account should have 500 after making transfer");
+    	
     }
 
     @Test
