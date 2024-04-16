@@ -182,18 +182,19 @@ public class ATMTest {
         assertNotNull(atm.getUser("user2"), "User with null password should still be retrievable.");
         assertEquals(atm.getUser("user2").getPassword(), null, "Password for user2 should be null.");
         
-        
+        //testUserRetrievalWithInvalidUsername
         assertNull(atm.getUser(null), "Retrieving user with null username should return null.");
         assertNull(atm.getUser("non_existent_user"), "Retrieving a non-existent user should return null.");
-//        
-//        // Incompatible types in storage
-//        try {
-//            atm.getUser(123); // This will cause a compilation error if not handled via method overloading or generics
-//            fail("Retrieving user with incorrect type should not be possible.");
-//        } catch (ClassCastException e) {
-//            // Expected behavior, catching for demonstration.
-//        }
-//        
+        
+//      
+//      // Incompatible types in storage
+//      try {
+//          atm.getUser(123); // This will cause a compilation error if not handled via method overloading or generics
+//          fail("Retrieving user with incorrect type should not be possible.");
+//      } catch (ClassCastException e) {
+//          // Expected behavior, catching for demonstration.
+//      }
+//      
         
     	
     }
