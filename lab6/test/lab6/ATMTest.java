@@ -167,8 +167,16 @@ public class ATMTest {
     	
     	 // Null storage for user accounts
         assertNull(atm.getUser(null), "Retrieving user with null username should return null.");
+        
+        // Null storage for utility company account
+        // This assumes a similar retrieval method for utility accounts, if they are separate.
+        // assertNull(atm.getUtilityAccount(null), "Retrieving utility account with null should return null.");
 
-    
+        // Null element with multiple user accounts
+        atm.registerUser("user1", "pass1", "pin1");
+        atm.registerUser(null, "pass2", "pin2");
+        assertNull(atm.getUser(null), "Retrieving a null user should return null despite multiple accounts.");
+
 
     	
     }

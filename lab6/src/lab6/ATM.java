@@ -10,14 +10,29 @@ public class ATM {
 	     this.users = new HashMap<>();
  }
 // Method to register a new user
- public void registerUser(String username, String password,String pin) {
-     if (!users.containsKey(username)) {
-         users.put(username, new User(username, password, pin));
-         System.out.println("User registered successfully.");
-     } else {
-         System.out.println("Username already exists. Please choose another one.");
-     }
- }
+// public void registerUser(String username, String password,String pin) {
+//     if (!users.containsKey(username)) {
+//         users.put(username, new User(username, password, pin));
+//         System.out.println("User registered successfully.");
+//     } else {
+//         System.out.println("Username already exists. Please choose another one.");
+//     }
+// }
+ 
+ //1st refactor
+ public void registerUser(String username, String password, String pin) {
+	    if (username == null || username.isEmpty()) {
+	        System.out.println("Invalid username. Cannot register user.");
+	        return;
+	    }
+	    if (users.containsKey(username)) {
+	        System.out.println("Username already exists. Please choose another one.");
+	    } else {
+	        users.put(username, new User(username, password, pin));
+	        System.out.println("User registered successfully.");
+	    }
+	}
+ 
  
  public User getUser(String username) {
 	    return users.get(username);
