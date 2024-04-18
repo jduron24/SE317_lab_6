@@ -2,6 +2,7 @@ package lab6;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
@@ -200,11 +201,26 @@ public class ATMTest {
 //      } catch (ClassCastException e) {
 //          // Expected behavior, catching for demonstration.
 //    	 
-//      }
-//      
-        
-    	
+//      } 
     }
+    
+  // part 4 tests
+    
+    @Test
+    @Tag("dataStorage")
+    public void testNullStorageForUserAccounts() {
+        assertNull(atm.getUser(null), "Retrieving user with null username should return null.");
+    }
+    
+    
+//doesnt pass    
+//    @Test
+//    @Tag("dataStorage")
+//    public void testNullStorageForUtilityCompanyAccount() {
+//        // Assuming a method to get utility accounts, if not available then adjust accordingly.
+//        assertNull(atm.getUtilityAccount(null), "Retrieving utility account with null should return null.");
+//    }
+
     
     @AfterEach
     public void restoreStreams() {
