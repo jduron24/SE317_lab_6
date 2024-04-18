@@ -41,7 +41,7 @@ public class ATMTest {
     @Test
     public void testUserRegistrationAndLogin() {
     	
-   	//register a new user
+    	//register a new user
     	atm.registerUser("john_doe", "password123", "123456");
         assertTrue(outContent.toString().contains("User registered successfully."));
         outContent.reset();
@@ -71,8 +71,7 @@ public class ATMTest {
         // transfer between checking and savings account, deposit into savings account,
         // withdraw from savings account, transfer between savings and checking account
         // Ensure expected outcomes for each test case
-    	
-    
+
     	 // Deposit into checking account
         testUser.depositToChecking(200);
         assertEquals(1200, testUser.getCheckingAccount(), "Checking account should have 1200 after deposit");
@@ -95,7 +94,6 @@ public class ATMTest {
         testUser.withdrawFromCheckings(200);
         assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after withdrawal");
 
-        //WORKS
         // Transfer from savings to checking account
         testUser.transferSavingsToCheckings(300);
         assertEquals(300, testUser.getCheckingAccount(), "Checking account should have 300 after receiving transfer");
@@ -122,11 +120,7 @@ public class ATMTest {
         //goofed with it a bit
         atm.login("utility_user", "utility_pass");
         assertFalse(outContent.toString().contains("Login successful"));
-      
-        //gave er the ole goof
-        assertFalse(outContent.toString().contains("Login successful"));
-        outContent.reset();
-       
+           
         // Check bill payment history - we simulate by checking the transactions or interactions
         // --- WORKS with 2nd refactor login code ---
 	        user.depositToChecking(500); // Simulate a transaction (like paying a bill)
