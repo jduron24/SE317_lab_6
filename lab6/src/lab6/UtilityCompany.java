@@ -3,6 +3,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class UtilityCompany {
 	private Map<String, UtilityAccountInfo> accounts;
@@ -11,8 +19,65 @@ public class UtilityCompany {
     public UtilityCompany() {
         // Initialize utility company accounts
         this.accounts = new HashMap<>();
+        
     }
 
+    // Method to load utility company accounts from a JSON file
+    public static void loadAccountsFromJsonFile() {
+    	
+    	 // Define the path to your JSON file
+        String jsonFilePath = "src/lab6/data.json";
+        
+    	
+        try (BufferedReader reader = new BufferedReader(new FileReader(jsonFilePath))) {
+            StringBuilder jsonData = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonData.append(line);
+            }
+
+            // Parse the JSON data manually
+            List<UtilityAccountInfo> accountInfoList = parseJsonData(jsonData.toString());
+
+            // Print the parsed data
+            for (UtilityAccountInfo accountInfo : accountInfoList) {
+                System.out.println("Username: " + accountInfo.getUsername());
+                System.out.println("Password: " + accountInfo.getPassword());
+                System.out.println("PIN: " + accountInfo.getPin());
+                System.out.println();
+            }
+        } catch (IOException e) {
+        	
+            e.printStackTrace();
+        }
+    }
+    // Method to manually parse the JSON data
+    private static List<UtilityAccountInfo> parseJsonData(String jsonData) {
+    	 List<UtilityAccountInfo> accountInfoList = new ArrayList<>();
+
+         // Remove leading and trailing brackets [ and ]
+         jsonData = jsonData.substring(1, jsonData.length() - 1);
+
+         // Split JSON data by commas to separate individual objects
+         String[] jsonObjects = jsonData.split(",");
+
+         // Iterate over each JSON object and extract username, password, and pin
+         for (String jsonObject : jsonObjects) {
+//             String[] keyValuePairs = jsonObject.split(":");
+//             String username = keyValuePairs[1].replaceAll("\"", "").trim(); // Remove quotes and leading/trailing spaces
+//             String password = keyValuePairs[3].replaceAll("\"", "").trim();
+//             String pin = keyValuePairs[5].replaceAll("\"", "").trim();
+System.out.println(jsonObject);
+             // Create UtilityAccountInfo object and add it to the list
+//             UtilityAccountInfo accountInfo = new UtilityAccountInfo(username, password, pin);
+//             accountInfoList.add(accountInfo);
+         }
+         
+         
+
+         return accountInfoList;
+    }
+    
     // Method to create a new utility company account
     public void createAccount(String username, String password, String pin) {
     	UtilityAccountInfo accountInfo = new UtilityAccountInfo(username, password, pin);
@@ -42,13 +107,6 @@ public class UtilityCompany {
             System.out.println("Invalid PIN or password.");
         }
         
-//        if (accounts.containsKey(username) && accounts.get(password).equals(password)) {
-//            System.out.println("Login successful.");
-//            return true;
-//        } else {
-//            System.out.println("Invalid username or password.");
-//            return false;
-//        }
     }
  
     
@@ -65,13 +123,13 @@ public class UtilityCompany {
     	 String userName;
          String password;
          String pin = generateSixDigitString();
-         UtilityCompany utilityCompany = new UtilityCompany();
+//         UtilityCompany utilityCompany = new UtilityCompany();
          Scanner userInput = new Scanner(System.in);  // Create a Scanner object
          String sOrl;
         
         
-
-        
+         
+         loadAccountsFromJsonFile(); // Load accounts from JSON file
         
         System.out.println("Create a new account Enter user name: ");
         userName = userInput.nextLine();
@@ -80,7 +138,7 @@ public class UtilityCompany {
         password = userInput.nextLine();
         
         System.out.println("Your unique pin #: " + pin); 
-        utilityCompany.createAccount(userName, password, pin);
+//        utilityCompany.createAccount(userName, password, pin);
         
         // while loop that runs forever here
         while(true){
@@ -88,7 +146,7 @@ public class UtilityCompany {
    	     sOrl = userInput.nextLine();
    	     
    	     if(sOrl.equals("l")) {
-   	        utilityCompany.login();// Prompt user to login
+//   	        utilityCompany.login();// Prompt user to login
    	     }
    	     else if(sOrl.equals("s")) {
    	    	 //Sign up functionality here 
@@ -100,7 +158,7 @@ public class UtilityCompany {
    	         
    	         System.out.println("Your unique pin #: " + pin);
    	         
-   	         utilityCompany.createAccount("utilityUser", "password", pin);
+//   	         utilityCompany.createAccount("utilityUser", "password", pin);
    	         
    	     }
         }
