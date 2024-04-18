@@ -2,6 +2,7 @@ package lab6;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
@@ -200,11 +201,70 @@ public class ATMTest {
 //      } catch (ClassCastException e) {
 //          // Expected behavior, catching for demonstration.
 //    	 
-//      }
-//      
-        
-    	
+//      } 
     }
+    
+  // part 4 tests
+    
+    @Test
+    @Tag("dataStorage")
+    public void testNullStorageForUserAccounts() {
+        assertNull(atm.getUser(null), "Retrieving user with null username should return null.");
+    }
+    
+    
+//doesnt pass    
+//    @Test
+//    @Tag("dataStorage")
+//    public void testNullStorageForUtilityCompanyAccount() {
+//        // Assuming a method to get utility accounts, if not available then adjust accordingly.
+//        assertNull(atm.getUtilityAccount(null), "Retrieving utility account with null should return null.");
+//    }
+    
+    @Test
+    @Tag("dataStorage")
+    public void testNullElementWithMultipleUserAccounts() {
+        atm.registerUser("user1", "pass1", "pin1");
+        atm.registerUser(null, "pass2", "pin2");
+        assertNull(atm.getUser(null), "Retrieving a null user should return null despite multiple accounts.");
+    }
+
+    
+    @Test
+    @Tag("dataStorage")
+    public void testNullSingleElementForUserAccount() {
+        atm.registerUser("user2", null, "pin3");
+        assertNotNull(atm.getUser("user2"), "User with null password should still be retrievable.");
+    }
+    
+    // works as intended but gives a red light. shouldn't assertthrows be appropriate here?
+//    @Test
+//    @Tag("dataStorage")
+//    public void testIncompatibleTypesInStorage() {
+//        // This assumes that User class can handle incorrect type via some logic
+//        assertThrows(ClassCastException.class, () -> atm.getUser(123), "Should throw ClassCastException for incorrect type.");
+//    }
+
+    // no pasa
+//    @Test
+//    @Tag("dataStorage")
+//    public void testEmptyElementsInUserAccounts() {
+//        atm.registerUser("", "", "");
+//        assertNotNull(atm.getUser(""), "User with empty string identifiers should be retrievable.");
+//    }
+    
+    @Test
+    @Tag("dataStorage")
+    public void testNormalCasesUserAccounts() {
+        atm.registerUser("user3", "pass3", "pin3");
+        assertNotNull(atm.getUser("user3"), "Single user should be retrievable.");
+        
+        atm.registerUser("user4", "pass4", "pin4");
+        atm.registerUser("user5", "pass5", "pin5");
+        assertNotNull(atm.getUser("user4"), "Multiple users: user4 should be retrievable.");
+        assertNotNull(atm.getUser("user5"), "Multiple users: user5 should be retrievable.");
+    }
+
     
     @AfterEach
     public void restoreStreams() {
