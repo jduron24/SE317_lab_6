@@ -220,6 +220,14 @@ public class ATMTest {
 //        // Assuming a method to get utility accounts, if not available then adjust accordingly.
 //        assertNull(atm.getUtilityAccount(null), "Retrieving utility account with null should return null.");
 //    }
+    
+    @Test
+    @Tag("dataStorage")
+    public void testNullElementWithMultipleUserAccounts() {
+        atm.registerUser("user1", "pass1", "pin1");
+        atm.registerUser(null, "pass2", "pin2");
+        assertNull(atm.getUser(null), "Retrieving a null user should return null despite multiple accounts.");
+    }
 
     
     @AfterEach
