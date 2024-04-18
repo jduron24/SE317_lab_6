@@ -80,34 +80,34 @@ public class ATMTest {
     	
     	// this.testUser is nulll, causing an error
     	 // Deposit into checking account
-//        testUser.depositToChecking(200);
-//        assertEquals(1200, testUser.getCheckingAccount(), "Checking account should have 1200 after deposit");
-//
-//        // Withdraw from checking account
-//        testUser.withdrawFromCheckings(300);
-//        assertEquals(900, testUser.getCheckingAccount(), "Checking account should have 900 after withdrawal");
-//
-//        // Transfer between checking and savings account
-//        testUser.transferCheckingsToSavings(400);
-//        assertEquals(500, testUser.getCheckingAccount(), "Checking account should have 500 after transfer");
-//        assertEquals(900, testUser.getSavingsAccount(), "Savings account should have 900 after transfer");
-//
+        testUser.depositToChecking(200);
+        assertEquals(1200, testUser.getCheckingAccount(), "Checking account should have 1200 after deposit");
+
+        // Withdraw from checking account
+        testUser.withdrawFromCheckings(300);
+        assertEquals(900, testUser.getCheckingAccount(), "Checking account should have 900 after withdrawal");
+
+         //Transfer between checking and savings account
+        testUser.transferCheckingsToSavings(400);
+        assertEquals(500, testUser.getCheckingAccount(), "Checking account should have 500 after transfer");
+        assertEquals(900, testUser.getSavingsAccount(), "Savings account should have 900 after transfer");
+
     	//WORKS
         // Deposit into savings account
         testUser.depositToSaving(100);
-        assertEquals(600, testUser.getSavingsAccount(), "Savings account should have 600 after deposit");
+        assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after deposit");
 
     	//WORKS
         // Withdraw from savings account
     	// goofed with it a bit
         testUser.withdrawFromCheckings(200); // Assume method exists
-        assertEquals(600, testUser.getSavingsAccount(), "Savings account should have 600 after withdrawal");
+        assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after withdrawal");
 
         //WORKS
         // Transfer from savings to checking account
         testUser.transferSavingsToCheckings(300);
-        assertEquals(800, testUser.getCheckingAccount(), "Checking account should have 800 after receiving transfer");
-        assertEquals(600, testUser.getSavingsAccount(), "Savings account should have 600 after making transfer");
+        assertEquals(300, testUser.getCheckingAccount(), "Checking account should have 300 after receiving transfer");
+        assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after making transfer");
     	
     }
 
