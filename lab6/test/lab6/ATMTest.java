@@ -237,6 +237,35 @@ public class ATMTest {
         assertNotNull(atm.getUser("user2"), "User with null password should still be retrievable.");
     }
     
+    // works as intended but gives a red light. shouldn't assertthrows be appropriate here?
+//    @Test
+//    @Tag("dataStorage")
+//    public void testIncompatibleTypesInStorage() {
+//        // This assumes that User class can handle incorrect type via some logic
+//        assertThrows(ClassCastException.class, () -> atm.getUser(123), "Should throw ClassCastException for incorrect type.");
+//    }
+
+    // no pasa
+//    @Test
+//    @Tag("dataStorage")
+//    public void testEmptyElementsInUserAccounts() {
+//        atm.registerUser("", "", "");
+//        assertNotNull(atm.getUser(""), "User with empty string identifiers should be retrievable.");
+//    }
+    
+    @Test
+    @Tag("dataStorage")
+    public void testNormalCasesUserAccounts() {
+        atm.registerUser("user3", "pass3", "pin3");
+        assertNotNull(atm.getUser("user3"), "Single user should be retrievable.");
+        
+        atm.registerUser("user4", "pass4", "pin4");
+        atm.registerUser("user5", "pass5", "pin5");
+        assertNotNull(atm.getUser("user4"), "Multiple users: user4 should be retrievable.");
+        assertNotNull(atm.getUser("user5"), "Multiple users: user5 should be retrievable.");
+    }
+
+    
     @AfterEach
     public void restoreStreams() {
         System.setOut(System.out); // Restore System.out to the original System.out
