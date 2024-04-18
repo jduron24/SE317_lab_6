@@ -20,27 +20,11 @@ public class ATM {
 // }
  
  //1st refactor
-// public void registerUser(String username, String password, String pin) {
-//	    if (username == null || username.isEmpty()) {
-//	        System.out.println("Invalid username. Cannot register user.");
-//	        return;
-//	    }
-//	    if (users.containsKey(username)) {
-//	        System.out.println("Username already exists. Please choose another one.");
-//	    } else {
-//	        users.put(username, new User(username, password, pin));
-//	        System.out.println("User registered successfully.");
-//	    }
-//	}
- 
- //2nd refactor
  public void registerUser(String username, String password, String pin) {
-	    // Removing or adjusting the check for empty strings
-	    if (username == null || password == null || pin == null) {
-	        throw new IllegalArgumentException("Username, password, and pin cannot be null");
+	    if (username == null || username.isEmpty()) {
+	        System.out.println("Invalid username. Cannot register user.");
+	        return;
 	    }
-
-	    // Adjust logic to allow empty strings
 	    if (users.containsKey(username)) {
 	        System.out.println("Username already exists. Please choose another one.");
 	    } else {
@@ -48,19 +32,13 @@ public class ATM {
 	        System.out.println("User registered successfully.");
 	    }
 	}
-
  
-// 
+ 
  public User getUser(String username) {
 	    return users.get(username);
 	}
  
-// public User getUser(Object input) {
-//	    if (!(input instanceof String)) {
-//	        throw new ClassCastException("getUser method expects a String as an argument");
-//	    }
-//	    return users.get((String) input);
-//	}
+
 //Method to login with username/password or pin
 // public void login(String username, String password) { 
 //	 boolean loggedIn = false;

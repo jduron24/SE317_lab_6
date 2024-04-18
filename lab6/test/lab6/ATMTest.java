@@ -207,6 +207,7 @@ public class ATMTest {
   // part 4 tests
     
     @Test
+    @Tag("dataStorage")
     public void testNullStorageForUserAccounts() {
         assertNull(atm.getUser(null), "Retrieving user with null username should return null.");
     }
@@ -214,17 +215,11 @@ public class ATMTest {
     
 //doesnt pass    
 //    @Test
+//    @Tag("dataStorage")
 //    public void testNullStorageForUtilityCompanyAccount() {
 //        // Assuming a method to get utility accounts, if not available then adjust accordingly.
 //        assertNull(atm.getUtilityAccount(null), "Retrieving utility account with null should return null.");
 //    }
-    
-//    @Test
-//    public void testPlaceholderForUtilityAccountManagement() {
-//        // This test does nothing since there is no utility account management.
-//        assertTrue(true, "Placeholder test since no utility account management is implemented.");
-//    }
-
     
     @Test
     @Tag("dataStorage")
@@ -236,6 +231,7 @@ public class ATMTest {
 
     
     @Test
+    @Tag("dataStorage")
     public void testNullSingleElementForUserAccount() {
         atm.registerUser("user2", null, "pin3");
         assertNotNull(atm.getUser("user2"), "User with null password should still be retrievable.");
@@ -243,20 +239,22 @@ public class ATMTest {
     
     // works as intended but gives a red light. shouldn't assertthrows be appropriate here?
 //    @Test
+//    @Tag("dataStorage")
 //    public void testIncompatibleTypesInStorage() {
 //        // This assumes that User class can handle incorrect type via some logic
 //        assertThrows(ClassCastException.class, () -> atm.getUser(123), "Should throw ClassCastException for incorrect type.");
 //    }
 
-    // works as it should, i just don't know how to get a illegal arguement to show green
+    // no pasa
 //    @Test
+//    @Tag("dataStorage")
 //    public void testEmptyElementsInUserAccounts() {
 //        atm.registerUser("", "", "");
-//        assertNull(atm.getUser(""), "User with empty string identifiers should be retrievable.");
+//        assertNotNull(atm.getUser(""), "User with empty string identifiers should be retrievable.");
 //    }
-
     
     @Test
+    @Tag("dataStorage")
     public void testNormalCasesUserAccounts() {
         atm.registerUser("user3", "pass3", "pin3");
         assertNotNull(atm.getUser("user3"), "Single user should be retrievable.");
