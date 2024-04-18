@@ -100,10 +100,11 @@ public class ATMTest {
 //        // tests work up until this point
 //        
 //        
-//        // Withdraw from savings account
-//        testUser.withdrawFromCheckings(200); // Assume method exists
-//        assertEquals(800, testUser.getSavingsAccount(), "Savings account should have 800 after withdrawal");
-//
+        // Withdraw from savings account
+    	// goofed with it a bit
+        testUser.withdrawFromCheckings(200); // Assume method exists
+        assertEquals(500, testUser.getSavingsAccount(), "Savings account should have 500 after withdrawal");
+
 //        // Transfer from savings to checking account
 //        testUser.transferSavingsToCheckings(300);
 //        assertEquals(800, testUser.getCheckingAccount(), "Checking account should have 800 after receiving transfer");
@@ -128,7 +129,7 @@ public class ATMTest {
 //        outContent.reset();
 //        
 // 
-//        // Login to utility company account - we simulate by logging in
+//        // Login to utility company account - we make sure that users can't login without the proper procedure
 //        atm.login("utility_user", "utility_pass");
 ////      assertTrue(outContent.toString().contains("Login successful"));
 //        // ---WORKS if we use assertFalse, and 2nd refactor login code but it's supposed to be assertTrue lol ---
@@ -189,10 +190,6 @@ public class ATMTest {
         assertNull(atm.getUser("non_existent_user"), "Retrieving a non-existent user should return null.");
         
         
-        
-       boolean varForTryCatchTest =  true;
-//      
-
        //  this test works as expected but doesn't show a green light. thus i'm commenting it out.
 //      try {
 //          atm.getUser(123); // This will cause a compilation error if not handled via method overloading or generics
