@@ -230,6 +230,13 @@ public class ATMTest {
     }
 
     
+    @Test
+    @Tag("dataStorage")
+    public void testNullSingleElementForUserAccount() {
+        atm.registerUser("user2", null, "pin3");
+        assertNotNull(atm.getUser("user2"), "User with null password should still be retrievable.");
+    }
+    
     @AfterEach
     public void restoreStreams() {
         System.setOut(System.out); // Restore System.out to the original System.out
