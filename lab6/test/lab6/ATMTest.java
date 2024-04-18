@@ -146,6 +146,7 @@ public class ATMTest {
         // Ensure expected outcomes for each test case
     	
     	
+    	
     	 // Null storage for user accounts
         assertNull(atm.getUser(null), "Retrieving user with null username should return null.");
         
