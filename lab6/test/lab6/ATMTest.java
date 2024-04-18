@@ -92,23 +92,22 @@ public class ATMTest {
 //        assertEquals(500, testUser.getCheckingAccount(), "Checking account should have 500 after transfer");
 //        assertEquals(900, testUser.getSavingsAccount(), "Savings account should have 900 after transfer");
 //
-//        // Deposit into savings account
-//        testUser.depositToSaving(100);
-//        assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after deposit");
-//
-//        
-//        // tests work up until this point
-//        
-//        
+    	//WORKS
+        // Deposit into savings account
+        testUser.depositToSaving(100);
+        assertEquals(600, testUser.getSavingsAccount(), "Savings account should have 600 after deposit");
+
+    	//WORKS
         // Withdraw from savings account
     	// goofed with it a bit
         testUser.withdrawFromCheckings(200); // Assume method exists
-        assertEquals(500, testUser.getSavingsAccount(), "Savings account should have 500 after withdrawal");
+        assertEquals(600, testUser.getSavingsAccount(), "Savings account should have 600 after withdrawal");
 
-//        // Transfer from savings to checking account
-//        testUser.transferSavingsToCheckings(300);
-//        assertEquals(800, testUser.getCheckingAccount(), "Checking account should have 800 after receiving transfer");
-//        assertEquals(500, testUser.getSavingsAccount(), "Savings account should have 500 after making transfer");
+        //WORKS
+        // Transfer from savings to checking account
+        testUser.transferSavingsToCheckings(300);
+        assertEquals(800, testUser.getCheckingAccount(), "Checking account should have 800 after receiving transfer");
+        assertEquals(600, testUser.getSavingsAccount(), "Savings account should have 600 after making transfer");
     	
     }
 
