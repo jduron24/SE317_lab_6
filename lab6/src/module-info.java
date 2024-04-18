@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author jonathanduron
+ * @author jonathanduron, willyg
  *
  */
 module lab6 {
