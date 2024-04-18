@@ -205,6 +205,8 @@ public class ATMTest {
     
   // part 4 tests
     
+    // Boundary Test: Checks how the system handles a null username input,
+    // which is a boundary condition to ensure robust error handling.
     @Test
     @Tag("dataStorage")
     public void testNullStorageForUserAccounts() {
@@ -223,6 +225,9 @@ public class ATMTest {
     @Test
     @Tag("dataStorage")
     public void testNullElementWithMultipleUserAccounts() {
+    	// Boundary Test: Checks the system's behavior when a null username is registered
+        // alongside valid users. This tests the system's handling of null keys in a map,
+        // which are boundary inputs for the user registration system.
         atm.registerUser("user1", "pass1", "pin1");
         atm.registerUser(null, "pass2", "pin2");
         assertNull(atm.getUser(null), "Retrieving a null user should return null despite multiple accounts.");
@@ -232,11 +237,19 @@ public class ATMTest {
     @Test
     @Tag("dataStorage")
     public void testNullSingleElementForUserAccount() {
+    	// Functionality Test: Verifies the system can handle and correctly process a user
+        // with a null password. This tests normal functionality but also touches on how null
+        // values within user attributes are handled, which can be considered a boundary condition.
         atm.registerUser("user2", null, "pin3");
         assertNotNull(atm.getUser("user2"), "User with null password should still be retrievable.");
     }
     
-    // works as intended but gives a red light. shouldn't assertthrows be appropriate here?
+    // works as intended, and the test gets a ClassCastException as expected. but the test gives a red light. shouldn't assertThrows be appropriate here?
+    // Boundary Test: Tests how the system handles being given an input of an incorrect type.
+    // Since Java is strongly typed, this situation normally shouldn't occur without explicit type casting
+    // or method overloading to accept Object types. This test must be implemented with the assumption
+    // that such handling is possible in the context of the application, typically via generics or
+    // method overloading that allows non-string input.
 //    @Test
 //    @Tag("dataStorage")
 //    public void testIncompatibleTypesInStorage() {
@@ -251,17 +264,41 @@ public class ATMTest {
 //        atm.registerUser("", "", "");
 //        assertNotNull(atm.getUser(""), "User with empty string identifiers should be retrievable.");
 //    }
+//    
+    
+    
+    
+    // Functionality test
+    // because it checks the application's compliance with its own rules by ensuring that users with empty usernames are correctly rejected. 
+    // It's not a boundary test as it primarily verifies expected behavior rather than exploring the limits or thresholds of input handling.
+    @Test
+    @Tag("dataStorage")
+    public void testEmptyElementsInUserAccounts() {
+        // Attempt to register a user with empty string identifiers.
+        // Since your method rejects empty usernames, we expect no user to be registered.
+        atm.registerUser("", "", "");
+        
+        // Verify that no user is registered and that getUser correctly returns null,
+        // demonstrating that the system handles empty usernames as designed.
+        assertNull(atm.getUser(""), "User with empty string identifiers should not be retrievable since registration should fail.");
+    }
     
     @Test
     @Tag("dataStorage")
     public void testNormalCasesUserAccounts() {
+        // Functionality Test: Ensures the system correctly handles basic user registration and retrieval.
+        // This test covers typical use cases for registering and retrieving single and multiple users,
+        // ensuring the system functions correctly under expected conditions.
         atm.registerUser("user3", "pass3", "pin3");
         assertNotNull(atm.getUser("user3"), "Single user should be retrievable.");
+//        assertNull(atm.getUser("user3"), "Single user should be retrievable.");
         
         atm.registerUser("user4", "pass4", "pin4");
         atm.registerUser("user5", "pass5", "pin5");
         assertNotNull(atm.getUser("user4"), "Multiple users: user4 should be retrievable.");
         assertNotNull(atm.getUser("user5"), "Multiple users: user5 should be retrievable.");
+//        assertNull(atm.getUser("user4"), "Multiple users: user4 should be retrievable.");
+//        assertNull(atm.getUser("user5"), "Multiple users: user5 should be retrievable.");
     }
 
     
