@@ -5,8 +5,11 @@ import java.util.Random;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,28 @@ public class UtilityCompany {
         
     }
 
+
+    // Utility method to add a new account to a JSON file
+    public static void addAccountToJsonFile(String userName, String password, String pin) {
+        String jsonFilePath = "src/lab6/data.json";
+        try {
+            // Read existing data into a string
+            String jsonContent = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
+            // Assume jsonContent looks like '[...]' where ... represents existing JSON objects
+            String newAccountJson = String.format("{\"username\": \"%s\", \"password\": \"%s\", \"pin\": \"%s\"}", userName, password, pin);
+            // Properly format the JSON by removing the last ']' and appending the new account JSON followed by ']'
+            String updatedJsonContent = jsonContent.substring(0, jsonContent.length() - 1) + (jsonContent.length() > 2 ? ", " : "") + newAccountJson + "]";
+            // Write updated JSON back to file
+            try (FileWriter fileWriter = new FileWriter(jsonFilePath)) {
+                fileWriter.write(updatedJsonContent);
+            }
+            System.out.println("Account added to JSON file successfully.");
+        } catch (IOException e) {
+            System.err.println("Failed to update JSON file: " + e.getMessage());
+        }
+    }
+
+    
     // Method to load utility company accounts from a JSON file
     public static void loadAccountsFromJsonFile() {
     	
@@ -161,6 +186,8 @@ public class UtilityCompany {
         
         System.out.println("Your unique pin #: " + pin); 
         
+        // add intial account test
+        addAccountToJsonFile(userName, password, pin);
         
         
 //        utilityCompany.createAccount(userName, password, pin);
@@ -182,6 +209,8 @@ public class UtilityCompany {
    	         password = userInput.nextLine();
    	         
    	         System.out.println("Your unique pin #: " + pin);
+   	         
+   	         addAccountToJsonFile(userName, password, pin);
    	         
 //   	         utilityCompany.createAccount("utilityUser", "password", pin);
    	         

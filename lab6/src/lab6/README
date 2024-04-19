@@ -23,6 +23,51 @@ The `BankAccount` class represents a bank account, including checking and
 savings accounts. It provides methods for depositing, withdrawing, and 
 transferring money between accounts.
 
+### 4. UtilityAccountInfo
+
+Designed to manage utility accounts. It supports functionalities such as creating accounts, loading account data from a JSON file, and managing user logins.
+
+Functionalities
+Account Management:
+createAccount(String username, String password, String pin): Creates a new utility account and stores it in an internal map.
+login(): Provides login functionality for existing users using a console-based interface.
+Data Persistence:
+addAccountToJsonFile(String userName, String password, String pin): Adds a new account to a JSON file. This method handles JSON formatting and updates the file with new account data.
+loadAccountsFromJsonFile(): Loads utility accounts from a JSON file. This method reads the file, parses the JSON content, and populates the internal accounts map with the parsed data.
+Utility Methods:
+generateSixDigitString(): Generates a six-digit random number used as a PIN for account security.
+Usage
+This class is utilized primarily through its main method which acts as a driver to demonstrate account creation and login functionalities. Users can interact through a console interface to either sign up for a new account or log in using existing credentials.
+
+JSON Handling
+The class includes manual JSON parsing and formatting methods to manage data persistence without relying on external libraries. It handles errors such as file I/O exceptions and provides feedback on the success or failure of data operations.
+
+Error Handling
+Comprehensive error handling is implemented, particularly in file operations and data parsing, to ensure robustness and reliability of the application.
+
+### 5. UtilityCopmany
+Overview
+The UtilityCompany class, a component of the lab6 package, is a utility account management system. It allows for creating, managing, and authenticating user accounts, utilizing data persistence through JSON file operations.
+
+Key Functionalities
+Account Creation and Management:
+createAccount(String username, String password, String pin): Registers a new account with the specified credentials and stores it in a local map structure for session management.
+login(): Implements a simple authentication mechanism through a console-based interface, allowing users to log in with their username and password.
+Data Persistence:
+addAccountToJsonFile(String userName, String password, String pin): Appends a new account in JSON format to an existing JSON file, handling data persistence beyond the session life.
+loadAccountsFromJsonFile(): Loads and parses account data from a JSON file, reconstructing the account objects into the system for session use.
+Utility Functions:
+generateSixDigitString(): Generates a random six-digit number, used as a PIN for account security.
+Implementation Details
+JSON Manipulation: Direct manipulation of JSON string formats to append new data and read existing data without external libraries.
+Error Handling: Robust error handling mechanisms are in place to manage I/O operations and potential data parsing issues, ensuring system resilience and stability.
+User Interaction: Utilizes the Scanner class for reading user input directly from the console, facilitating real-time user interactions for account creation and login.
+System Operations
+Upon execution, the system initially loads existing accounts from the JSON file.
+Users are prompted to either log in or sign up. Account creation involves generating a unique PIN, which is displayed to the user and stored along with other credentials.
+Continuous operation within a loop allows for ongoing user interaction without restarting the application.
+
+
 ## Usage
 
 To use the ATM system:
@@ -37,3 +82,8 @@ withdrawal, transfer, and checking account balances.
 - The ATM system uses basic console input/output for user interaction.
 - User data is stored in memory and not persisted across sessions.
 - This implementation is for educational purposes and may not be suitable for production use.
+
+
+
+
+
