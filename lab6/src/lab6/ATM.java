@@ -22,8 +22,8 @@ public class ATM {
 	 // Constructor to initialize the ATM with an empty user map
 	 public ATM() {
 	     this.users = new HashMap<>();
-	     checkingAccount = new BankAccount(100,500,500);
-	     savingAccount = new BankAccount(100,200,200);
+	     checkingAccount = new BankAccount(100,5000,500);
+	     savingAccount = new BankAccount(100,500,200);
 	 }	
 // Method to register a new user
 // public void registerUser(String username, String password,String pin) {

@@ -330,16 +330,8 @@ public class ATMTest {
             return false;
         }
     }
-
-//    @Test
-//    void testLogin() {
-//        UtilityCompany utilityCompany = new UtilityCompany();
-//        utilityCompany.createAccount("testUser", "testPass", "123456", "100");
-//        assertTrue(utilityCompany.login());
-//    }
-    
-    
-    
+       
+   
     
     @AfterEach
     public void restoreStreams() {

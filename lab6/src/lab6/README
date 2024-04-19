@@ -8,29 +8,201 @@ withdrawal, and transfer between checking and savings accounts.
 
 ### 1. ATM.java
 
-This class represents the main entry point of the ATM system. It contains 
-the `main` method and orchestrates user registration, login, and account operations.
+ATM Module
+Description
+The ATM class is a core component of our larger banking application project. It simulates the functionality of an ATM, enabling users to manage their checking and savings accounts through a command-line interface. This module supports user registration, login, and typical ATM operations such as deposits, withdrawals, and transfers.
+
+Features
+User Management: Handles user registration with authentication using passwords and PINs.
+Account Operations:
+Checking Account: Users can perform deposits, withdrawals, check balances, and pay bills.
+Savings Account: Includes features for deposits, transfers, and balance checks.
+Interactive Console Interface: Provides a menu-driven approach for users to interact with their bank accounts.
+Integration
+This module interacts with the BankAccount class for processing transactions and maintaining account balances. It is designed to be integrated with the broader banking application, which may include additional modules for loan management, customer service, and other banking services.
+
+Usage
+Within the project, ATM can be instantiated and used to simulate real-world banking operations. It provides a practical demonstration of object-oriented design and exception handling in a financial context.
 
 ### 2. User.java
 
-The `User` class represents a user of the ATM system. It contains methods 
-for managing user accounts, such as depositing, withdrawing, and transferring 
-money between checking and savings accounts.
+User Module
+Description
+The User class is designed to represent and manage the details of an individual user in the ATM system. This class handles user authentication and transactions related to their linked bank accounts. It provides functionalities for managing checking and savings accounts, such as deposits, withdrawals, and inter-account transfers.
 
+Features
+User Authentication: Stores and manages user credentials, including usernames, passwords, and PINs.
+Account Linkage: Each user has a linked checking and savings account with customizable balance limits.
+Financial Transactions:
+Deposits and Withdrawals: Users can deposit or withdraw funds from either their checking or savings accounts.
+Transfers: Allows transferring funds between the checking and savings accounts within the same user profile.
+Account Balances: Provides methods to check the current balances of linked checking and savings accounts.
+Integration
+This module integrates directly with the BankAccount class, utilizing its methods to manage the financial transactions. It's pivotal for the functioning of the ATM system where individual user actions need to be authenticated and processed according to account-specific rules.
+
+Usage
+Instances of the User class are created with unique usernames, passwords, and PINs. The class interacts with user input from the ATM interface to perform and manage the requested banking operations, ensuring that all transactions adhere to the defined limits and balances.
 ### 3. BankAccount.java
+BankAccount Module
+Description
+The BankAccount class serves as a fundamental component of our banking application, designed to encapsulate the behavior of a bank account. It manages basic functionalities such as deposits, withdrawals, and transfers between accounts, while enforcing daily limits on these transactions.
 
-The `BankAccount` class represents a bank account, including checking and 
-savings accounts. It provides methods for depositing, withdrawing, and 
-transferring money between accounts.
+Features
+Account Balances: Tracks the current balance of an account, allowing for secure financial management.
+Transaction Limits: Enforces daily limits on deposits and withdrawals to promote responsible banking behavior.
+Deposits and Withdrawals: Provides methods to deposit and withdraw funds within set limits, with real-time balance updates.
+Transfers: Supports transfers between different types of accounts (e.g., from checking to savings and vice versa), ensuring transactions do not exceed account balances.
+Integration
+This module is integral to the operation of the larger banking application, interacting with other classes such as ATM and possibly others involved in handling user interactions and other banking services. The BankAccount class ensures financial transactions are processed in a secure and reliable manner, providing a robust foundation for further features like loan processing or investment management.
 
-## Usage
+Usage
+Instances of the BankAccount class are created with specified initial balances and transaction limits. The class is used throughout the banking application to manage and safeguard user funds, facilitate transactions, and provide feedback on operations performed.
 
-To use the ATM system:
 
-1. Run the `ATM.java` file.
-2. Choose whether to sign up or log in.
-3. Follow the prompts to perform banking operations such as deposit, 
-withdrawal, transfer, and checking account balances.
+### 5. UtilityAccountInfo.java
+UtilityAccountInfo Module
+Description
+The UtilityAccountInfo class serves as a specialized data storage module designed to manage utility account information within the banking application. This class stores user credentials and the amount due for utility payments, providing a structured way to access and handle utility bill-related data.
+
+Features
+Credential Management: Stores critical information such as usernames, passwords, and PINs for utility accounts.
+Bill Management: Maintains information about the amount due on utility bills, allowing for easy retrieval and integration with payment systems.
+Integration
+This class is primarily used in scenarios where utility payments are managed. It can be integrated with payment processing modules to automate and simplify the payment of utility bills. This integration ensures that payments are applied correctly and securely to the appropriate accounts.
+
+Usage
+Instances of the UtilityAccountInfo class are created with the necessary user and bill details. This setup facilitates the secure management of utility payments by providing essential account information required to process transactions accurately.
+
+
+### 6. UtilityCompany.java
+UtilityCompany Module
+Description
+The UtilityCompany class is designed to manage utility account information and operations within the banking application. This class handles the storage, retrieval, and management of utility accounts including their authentication, transaction records, and payment functionalities.
+
+Features
+Account Management: Facilitates the creation and storage of utility accounts with attributes like username, password, PIN, and amount due.
+Data Persistence: Includes methods to save and load utility account data to and from a JSON file, ensuring data persistence across sessions.
+Login Functionality: Provides login capabilities for utility accounts to ensure secure access.
+User Interaction: Supports user interactions through a command-line interface for tasks such as viewing payment history and upcoming bill details.
+Utility Payments: Manages payment details, offering users the ability to review and pay their utility bills.
+Integration
+This module interacts with the UtilityAccountInfo class to manage individual utility account details. It is also designed to be integrated with larger financial or customer service systems within the application, facilitating comprehensive account management solutions.
+
+Usage
+Upon instantiation, the UtilityCompany class loads existing account data from a JSON file and allows for the creation of new accounts. It provides a user interface for logging in to utility accounts and managing bill payments. The class also includes utility methods for generating random PINs and managing user choices related to utility payments.
+
+
+### data.json File Structure and Purpose
+Overview
+The data.json file is a crucial component of the banking application, specifically used within the UtilityCompany module to store and manage utility account information. This JSON file facilitates data persistence by storing utility account details across sessions, allowing the application to retrieve and manipulate user-specific information upon demand.
+
+Structure
+The data.json file is structured to store multiple entries, each representing a utility account with the following fields:
+
+username: A string representing the unique identifier for the utility account holder.
+password: A string containing the password for the utility account, used for authentication purposes.
+pin: A string representing a unique personal identification number associated with the utility account.
+amountDue: A string indicating the current amount due for payment in the utility account.
+An example entry in the data.json file looks like this:
+{
+  "username": "testUser3",
+  "password": "testPass3",
+  "pin": "111222",
+  "amountDue": "300"
+}
+
+Purpose
+Secure Storage: Ensures that sensitive information such as passwords and PINs are stored securely and consistently, accessible only by the application.
+Data Retrieval: The UtilityCompany class utilizes this file to load account information at startup, allowing for immediate access to user data for authentication and transaction processing.
+Scalability: Using a JSON format allows for easy scalability. More fields can be added to each entry as the system grows and requires more detailed user profiles or additional data points.
+Integration: The JSON format integrates seamlessly with the Java programming environment, enabling straightforward parsing and data manipulation using standard libraries.
+Usage
+During the application's operation:
+
+When new utility accounts are created, their details are formatted into JSON and appended to data.json.
+On startup, UtilityCompany loads this data to populate the application's internal data structures, facilitating immediate availability of utility account details for user logins and transaction processing.
+Modifications to account details due to transactions or updates are reflected in the JSON file, ensuring data integrity and consistency.
+
+
+
+
+##How to use the ATM.java and its UI:
+Overview
+The ATM.java file is the entry point for the ATM simulation within our banking application. It allows users to interact with their checking and savings accounts, perform various banking transactions, and manage their user details.
+
+
+
+
+Features
+The ATM simulation provides the following functionalities through a console-based user interface:
+
+User Registration and Login: New users can register an account by entering a username, password, and a PIN. Returning users can log in using their credentials.
+Account Management:
+Checking Account Operations: Perform deposits, withdrawals, and view balance.
+Savings Account Operations: Manage savings with deposit, withdrawal, and balance viewing options.
+Transfers: Transfer funds between the checking and savings accounts.
+Bill Payments: Pay utility bills directly from the checking account.
+User Interface
+Upon running the ATM.java file, the user will be prompted with a series of options:
+
+Login/Register: Users need to either log in using their existing credentials or register a new account.
+Select Account Type: Users choose between managing their checking or savings account.
+Choose Operation: Depending on the account type selected, users can perform relevant banking operations such as deposits, withdrawals, transfers, and checking balances.
+Bill Payments and More: For checking accounts, users can also pay bills and view pending transactions.
+Navigation
+Users navigate through the options using simple command-line prompts. Input is taken via the keyboard, and users are guided through their transactions with clear instructions and feedback based on their actions.
+
+Example Session
+User Logs In:
+User is prompted to enter their username and password.
+Upon successful login, the main menu options are displayed.
+Transaction:
+User selects the checking account and chooses to deposit.
+User enters the amount and receives a confirmation of the successful transaction.
+Troubleshooting
+If users encounter issues while running the ATM simulation:
+
+Ensure that all Java files are compiled without errors.
+Check that user inputs match the expected formats, especially during login or account operations.
+Verify that the ATM class is correctly interacting with the BankAccount and User classes to manage account data.
+
+
+##How to use UtiliyCompany.java and its UI
+The UtilityCompany.java file is part of our banking application that manages utility accounts, allowing for the management of utility bills, account creation, and data handling. This component is designed to simulate utility company operations, including logging in to utility accounts, creating new utility accounts, and managing payments.
+
+Features
+The UtilityCompany system provides several functionalities through a command-line interface:
+
+Account Creation: Users can create new utility accounts by entering a username, password, PIN, and an initial amount due.
+Login: Users can log in to manage their utility accounts using their username and password.
+Utility Bill Management: View payment history, upcoming bill details, and make payments.
+User Interface
+Upon running the UtilityCompany.java file, the user will encounter a series of prompts:
+
+Create Account or Login: Users are initially prompted to either create a new account or log in with existing credentials.
+Manage Account: Once logged in, users can choose to view payment history, upcoming bills, or make a payment.
+Account Operations:
+View Payment History: Display past payment dates and amounts.
+Next Bill Payment: Shows details about the next bill, including the amount due and due date.
+Make Payment: Allows users to input an amount to pay towards the utility bill.
+Navigation
+Users navigate through the utility company system using simple command-line prompts, entering their choices directly through the keyboard. Clear instructions guide them through the process of managing their utility accounts.
+
+Example Session
+Account Creation:
+Users provide username, password, and are assigned a PIN.
+Confirmation of account creation is displayed.
+Utility Bill Payment:
+User logs in using their credentials.
+User selects to view the next bill and is shown the amount due and due date.
+User chooses to make a payment and enters the amount.
+Troubleshooting
+If users experience issues while running the UtilityCompany system:
+
+Check that all Java files are compiled correctly and are error-free.
+Ensure that user inputs are correctly formatted, particularly usernames and passwords during login.
+Verify that file paths to data.json are correct and accessible for reading and writing account data.
+
 
 ## Notes
 
