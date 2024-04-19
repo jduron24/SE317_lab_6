@@ -59,27 +59,39 @@ public class UtilityCompany {
          // Remove leading and trailing brackets [ and ]
          jsonData = jsonData.substring(1, jsonData.length() - 1);
          
-         String[] keyValuePairs = jsonData.split(",");
-         // Split JSON data by commas to separate individual objects
-         String[] jsonObjects = jsonData.split(",");
+         // Split JSON data by commas to separate individual objects         
+//         String[] keyValuePairs = jsonData.split(",");
+
+      // Split JSON string by }, to separate individual objects
+         String[] jsonObjects = jsonData.split("\\},\\s*");
+         
          String username = null;
          String password = null;
          String pin = null;
-         // Iterate over each key-value pair in the object
-         for (String pair : keyValuePairs) {
-             String[] keyValue = pair.split(":");
-             String key = keyValue[0].replaceAll("\"", "").trim();
-             String value = keyValue[1].replaceAll("\"", "").trim();
-             System.out.println("test");
-             // Check the key and assign the value accordingly
-             if (key.contains("username")) {
-                 username = value;
-             } else if (key.equals("password")) {
-                 password = value;                 
-             } else if (key.equals("pin")) {
-                 pin = value;
-             }
-             
+         
+         // Iterate over each object
+         for (String pair : jsonObjects) {
+        	 // Split the JSON string by comma to separate key-value pairs
+             String[] keyValuePairs = pair.split(",\\s*");
+
+             // Iterate over each key-value pair
+             for (String pair2 : keyValuePairs) {
+                 // Split the key-value pair by colon to separate key and value
+                 String[] keyValue = pair2.split(":\\s*");
+
+                 // Extract key and value
+                 String key = keyValue[0].replaceAll("\"", "").trim();
+                 String value = keyValue[1].replaceAll("\"", "").trim();
+
+               
+                 if (key.contains("username")) {
+                     username = value;
+                 } else if (key.equals("password")) {
+                     password = value;                 
+                 } else if (key.equals("pin")) {
+                     pin = value;
+                 }
+             }    
              UtilityAccountInfo accountInfo = new UtilityAccountInfo(username, password, pin);
              accountInfoList.add(accountInfo);
              
@@ -148,6 +160,9 @@ public class UtilityCompany {
         password = userInput.nextLine();
         
         System.out.println("Your unique pin #: " + pin); 
+        
+        
+        
 //        utilityCompany.createAccount(userName, password, pin);
         
         // while loop that runs forever here
