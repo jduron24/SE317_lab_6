@@ -4,7 +4,8 @@ import java.util.*;
 //Main ATM class
 public class ATM {
 	 private Map<String, User> users;
-	 
+	 private static BankAccount checkingAccount;
+	 private static BankAccount savingAccount;
 	 // Constructor to initialize the ATM with an empty user map
 	 public ATM() {
 	     this.users = new HashMap<>();
@@ -40,20 +41,20 @@ public class ATM {
  
 
 //Method to login with username/password or pin
- public void login(String username, String password) { 
-	 boolean loggedIn = false;
-	for(User user : users.values()) {
-		if (user != null && (user.password.equals(password) || user.pin.equals(password)) && user.password.equals(password)) {
-	        System.out.println("Login successful");
-	        userChoice(user);
-	        loggedIn = true;
-	        break;
-		}
-	}
-	if (!loggedIn) {
-        System.out.println("Invalid PIN or password.");
-    }
- }
+// public void login(String username, String password) { 
+//	 boolean loggedIn = false;
+//	for(User user : users.values()) {
+//		if (user != null && (user.password.equals(password) || user.pin.equals(password)) && user.password.equals(password)) {
+//	        System.out.println("Login successful");
+//	        userChoice(user);
+//	        loggedIn = true;
+//	        break;
+//		}
+//	}
+//	if (!loggedIn) {
+//        System.out.println("Invalid PIN or password.");
+//    }
+// }
  
  //2nd refactor
 //public boolean login(String username, String password) {
@@ -86,20 +87,20 @@ public class ATM {
      }
      return sb.toString();
  }
-//Method to handle user login credentials
- public static void loginCredentials(ATM atm) {
-	 String userName;
-	 String password;
-	 Scanner userInput = new Scanner(System.in);
-	 System.out.println("Enter userName or 6 digit code");
-	 userName = userInput.nextLine();
-	 System.out.println("Enter password");
-	 password = userInput.nextLine();
-	 atm.login(userName,password);
-	 
- }
+////Method to handle user login credentials
+// public static void loginCredentials(ATM atm) {
+//	 String userName;
+//	 String password;
+//	 Scanner userInput = new Scanner(System.in);
+//	 System.out.println("Enter userName or 6 digit code");
+//	 userName = userInput.nextLine();
+//	 System.out.println("Enter password");
+//	 password = userInput.nextLine();
+//	 atm.login(userName,password);
+//	 
+// }
 //Method to present user choices after login
- public static void userChoice(User user) {
+ public static void userChoice() {
 	 String input;
 	 Scanner userInput = new Scanner(System.in);
 	 
@@ -109,10 +110,10 @@ public class ATM {
 	
 	 while (!input.equals("l")){
 		 if(input.equals("c")) {
-			 checkingsFunctionality(user);// go to checkings functionality
+			 checkingsFunctionality(checkingAccount);// go to checkings functionality
 		 }
 		 else if (input.equals("s")) {
-			 savingsFunctionality(user);// go to saving functionality
+			 savingsFunctionality(savingAccount);// go to saving functionality
 		 }
 		 
 		 System.out.println("\n Checkings(c) \n Savings(s) \n Logout(l)");
@@ -120,7 +121,7 @@ public class ATM {
 	 }
  }
 // Method to handle savings account operations
-public static void savingsFunctionality(User userBankAccount) {
+public static void savingsFunctionality(BankAccount userBankAccount) {
 	String input;
 	Scanner userInput = new Scanner(System.in);
 	
@@ -137,26 +138,26 @@ public static void savingsFunctionality(User userBankAccount) {
 		System.out.println("deposit \n");
 		System.out.println("Deposit amount:");
 		depositAmount = userInput.nextLine();
-		userBankAccount.depositToSaving(Integer.parseInt(depositAmount));// deposits money to savings account
-		System.out.println(userBankAccount.getSavingsAccount());
+		userBankAccount.deposit(Integer.parseInt(depositAmount));// deposits money to savings account
+		System.out.println(userBankAccount.getBalance());
 		break;
 	case "t":
 		String transferAmount;
 		System.out.println("transfer \n");
 		System.out.println("Transfer to savings amount: ");
 		transferAmount = userInput.nextLine();
-		userBankAccount.transferSavingsToCheckings(Integer.parseInt(transferAmount)); // transfer from savings to checkings
+		userBankAccount.transferToChecking(Integer.parseInt(transferAmount), checkingAccount); // transfer from savings to checkings
 		break;
 	case "b":
 		System.out.println("get balance \n");
-		System.out.println(userBankAccount.getSavingsAccount());
+		System.out.println(userBankAccount.getBalance());
 		break;
 	default:
 		System.out.println("Try again");
 	}	
 }
 //Method to handle checkings account operations
-public static void checkingsFunctionality(User userBankAccount) {
+public static void checkingsFunctionality(BankAccount userBankAccount) {
 	String input;
 	Scanner userInput = new Scanner(System.in);
 	
@@ -173,27 +174,27 @@ public static void checkingsFunctionality(User userBankAccount) {
 		System.out.println("deposit \n");
 		System.out.println("Deposit amount:");
 		depositAmount = userInput.nextLine();
-		userBankAccount.depositToChecking(Integer.parseInt(depositAmount));// deposits money to checkings account
-		System.out.println(userBankAccount.getCheckingAccount());
+		userBankAccount.deposit(Integer.parseInt(depositAmount));// deposits money to checkings account
+		System.out.println(userBankAccount.getBalance());
 		break;
 	case "w":
 		String withDrawAmount;
 		System.out.println("withdraw \n");
 		System.out.println("Withdraw amount: ");
 		withDrawAmount = userInput.nextLine();
-		userBankAccount.withdrawFromCheckings(Integer.parseInt(withDrawAmount));
-		System.out.println(userBankAccount.getCheckingAccount());
+		userBankAccount.withdraw(Integer.parseInt(withDrawAmount));
+		System.out.println(userBankAccount.getBalance());
 		break;
 	case "t":
 		String transferAmount;
 		System.out.println("transfer \n");
 		System.out.println("Transfer to savings amount: ");
 		transferAmount = userInput.nextLine();
-		userBankAccount.transferCheckingsToSavings(Integer.parseInt(transferAmount));
+		userBankAccount.transferToSaving(Integer.parseInt(transferAmount), savingAccount);
 		break;
 	case "b":
 		System.out.println("get balance \n");
-		System.out.println(userBankAccount.getCheckingAccount());
+		System.out.println(userBankAccount.getBalance());
 		break;
 	default:
 		System.out.println("Try again");
@@ -207,37 +208,13 @@ public static void checkingsFunctionality(User userBankAccount) {
      String pin = generateSixDigitString();
      Scanner userInput = new Scanner(System.in);  // Create a Scanner object
      String sOrl;
-     System.out.println("Create a new account Enter user name: ");
-     userName = userInput.nextLine();
- 
-     System.out.println("Enter a password");
-     password = userInput.nextLine();
-     
-     System.out.println("Your unique pin #: " + pin);
-     
-     atm.registerUser(userName,password,pin); // register new user to the system
+
+
      
      
      // while loop that runs forever here
      while(true){
-	     System.out.println("Sign-up(s) or login(l)");
-	     sOrl = userInput.nextLine();
-	     
-	     if(sOrl.equals("l")) {
-	    	 loginCredentials(atm);
-	     }
-	     else if(sOrl.equals("s")) {
-	    	 //Sign up functionality here 
-	    	 System.out.println("Create a new account Enter user name: ");
-	         userName = userInput.nextLine();
-	     
-	         System.out.println("Enter a password");
-	         password = userInput.nextLine();
-	         
-	         System.out.println("Your unique pin #: " + pin);
-	         
-	         atm.registerUser(userName,password,pin); // register new user to the system
-	     }
+	     userChoice();
      }
      
  }

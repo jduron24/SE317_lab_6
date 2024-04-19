@@ -13,8 +13,7 @@ import java.util.List;
 
 
 public class UtilityCompany {
-	private Map<String, UtilityAccountInfo> accounts;
-
+	private static Map<String, UtilityAccountInfo> accounts;
 
     public UtilityCompany() {
         // Initialize utility company accounts
@@ -39,14 +38,19 @@ public class UtilityCompany {
             // Parse the JSON data manually
             List<UtilityAccountInfo> accountInfoList = parseJsonData(jsonData.toString());
 
-            // Print the parsed data
+//            // Print the parsed data
+//            for (UtilityAccountInfo accountInfo : accountInfoList) {
+//                System.out.println("Username: " + accountInfo.getUsername());
+//                System.out.println("Password: " + accountInfo.getPassword());
+//                System.out.println("PIN: " + accountInfo.getPin());
+//                System.out.println();
+            
+         // Add each UtilityAccountInfo object to the accounts map
             for (UtilityAccountInfo accountInfo : accountInfoList) {
-                System.out.println("Username: " + accountInfo.getUsername());
-                System.out.println("Password: " + accountInfo.getPassword());
-                System.out.println("PIN: " + accountInfo.getPin());
-                System.out.println();
-                
+                accounts.put(accountInfo.getUsername(), accountInfo);
             }
+//                
+//            }
         } catch (IOException e) {
         	
             e.printStackTrace();
@@ -120,7 +124,8 @@ public class UtilityCompany {
     	for(UtilityAccountInfo user : accounts.values()) {
     		if (user != null && (user.getUsername().equals(username) || user.getPin().equals(password)) && user.getPassword().equals(password)) {
     	        System.out.println("Login successful");
-//    	        userChoice(user);
+    	        
+    	        UtilityUserChoice();
     	        loggedIn = true;
     	        break;
     		}
@@ -140,12 +145,32 @@ public class UtilityCompany {
         }
         return sb.toString();
     }
+    
+    
+    public void UtilityUserChoice() {
+    	String input;
+    	Scanner userInput = new Scanner(System.in);  // Create a Scanner object
+    	String payAmount = "50";
+    	String paymentHistory;
+    	System.out.println("Payment History (p)");
+    	System.out.println("Next Bill Payment(b)");
+    	
+    	paymentHistory = "3/18/2024, 2/18/2024, 1/18/2024";
+    	input = userInput.nextLine();
+    	
+    	if(input.equals("p")) {
+    		System.out.println(paymentHistory);
+    	}
+    	else if(input.equals("b")) {
+    		System.out.println("Amount due "+payAmount +" Due Date 25th");
+    	}
+    }
 
     public static void main(String[] args) {
     	 String userName;
          String password;
          String pin = generateSixDigitString();
-//         UtilityCompany utilityCompany = new UtilityCompany();
+         UtilityCompany utilityCompany = new UtilityCompany();
          Scanner userInput = new Scanner(System.in);  // Create a Scanner object
          String sOrl;
         
@@ -163,7 +188,7 @@ public class UtilityCompany {
         
         
         
-//        utilityCompany.createAccount(userName, password, pin);
+        utilityCompany.createAccount(userName, password, pin);
         
         // while loop that runs forever here
         while(true){
@@ -171,7 +196,7 @@ public class UtilityCompany {
    	     sOrl = userInput.nextLine();
    	     
    	     if(sOrl.equals("l")) {
-//   	        utilityCompany.login();// Prompt user to login
+   	        utilityCompany.login();// Prompt user to login
    	     }
    	     else if(sOrl.equals("s")) {
    	    	 //Sign up functionality here 
@@ -183,7 +208,7 @@ public class UtilityCompany {
    	         
    	         System.out.println("Your unique pin #: " + pin);
    	         
-//   	         utilityCompany.createAccount("utilityUser", "password", pin);
+   	         utilityCompany.createAccount("utilityUser", "password", pin);
    	         
    	     }
         }
