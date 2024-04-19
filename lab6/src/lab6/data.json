@@ -2,11 +2,20 @@
   {
     "username": "user1",
     "password": "password1",
-    "pin": "123456"
+    "pin": "123456",
+    "amountDue": "50"
   },
   {
     "username": "user2",
     "password": "password2",
-    "pin": "567890"
+    "pin": "567890",
+    "amountDue": "50"
   }
+, 
+{
+"username": "jon", 
+"password": "123", 
+"pin": "127434", 
+"amountDue": "50" 
+}
 ]

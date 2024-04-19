@@ -5,8 +5,11 @@ import java.util.Random;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,26 @@ public class UtilityCompany {
         // Initialize utility company accounts
         this.accounts = new HashMap<>();
         
+    }
+    
+    // Utility method to add a new account to a JSON file
+    public static void addAccountToJsonFile(String userName, String password, String pin, String amountDue) {
+        String jsonFilePath = "src/lab6/data.json";
+        try {
+            // Read existing data into a string
+            String jsonContent = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
+            // Assume jsonContent looks like '[...]' where ... represents existing JSON objects
+            String newAccountJson = String.format("\n{\n\"username\": \"%s\", \n\"password\": \"%s\", \n\"pin\": \"%s\", \n\"amountDue\": \"%s\" \n}\n", userName, password, pin,amountDue);
+            // Properly format the JSON by removing the last ']' and appending the new account JSON followed by ']'
+            String updatedJsonContent = jsonContent.substring(0, jsonContent.length() - 2) + (jsonContent.length() > 2 ? ", " : "") + newAccountJson +"]";
+            // Write updated JSON back to file
+            try (FileWriter fileWriter = new FileWriter(jsonFilePath)) {
+                fileWriter.write(updatedJsonContent);
+            }
+            System.out.println("Account added to JSON file successfully.");
+        } catch (IOException e) {
+            System.err.println("Failed to update JSON file: " + e.getMessage());
+        }
     }
 
     // Method to load utility company accounts from a JSON file
@@ -72,6 +95,7 @@ public class UtilityCompany {
          String username = null;
          String password = null;
          String pin = null;
+         String amountDue = null;
          
          // Iterate over each object
          for (String pair : jsonObjects) {
@@ -95,8 +119,11 @@ public class UtilityCompany {
                  } else if (key.equals("pin")) {
                      pin = value;
                  }
+	             else if (key.equals("amountDue")) {
+	                 pin = value;
+	             }
              }    
-             UtilityAccountInfo accountInfo = new UtilityAccountInfo(username, password, pin);
+             UtilityAccountInfo accountInfo = new UtilityAccountInfo(username, password, pin, amountDue);
              accountInfoList.add(accountInfo);
              
          }
@@ -105,9 +132,10 @@ public class UtilityCompany {
     }
     
     // Method to create a new utility company account
-    public void createAccount(String username, String password, String pin) {
-    	UtilityAccountInfo accountInfo = new UtilityAccountInfo(username, password, pin);
+    public void createAccount(String username, String password, String pin,String amountDue) {
+    	UtilityAccountInfo accountInfo = new UtilityAccountInfo(username, password, pin, amountDue);
         accounts.put(username, accountInfo);
+        addAccountToJsonFile(username, password, pin, amountDue);
         System.out.println("Utility company account created successfully.");
     }
     // Method to login to the utility company account
@@ -188,7 +216,7 @@ public class UtilityCompany {
         
         
         
-        utilityCompany.createAccount(userName, password, pin);
+        utilityCompany.createAccount(userName, password, pin, "50");
         
         // while loop that runs forever here
         while(true){
@@ -208,7 +236,7 @@ public class UtilityCompany {
    	         
    	         System.out.println("Your unique pin #: " + pin);
    	         
-   	         utilityCompany.createAccount("utilityUser", "password", pin);
+   	         utilityCompany.createAccount("utilityUser", "password", pin, "50");
    	         
    	     }
         }
