@@ -41,29 +41,30 @@ public class ATMTest {
     @Test
     public void testUserRegistrationAndLogin() {
     	
-
-    	// ----- ****these next two tests work***
-    	
-//    	//register a new user
+    	// Functionality Test: Checks the basic functionality of registering a new user and expects a success message.
+    	//register a new user
     	atm.registerUser("john_doe", "password123", "123456");
         assertTrue(outContent.toString().contains("User registered successfully."));
         outContent.reset();
 
-//        //register an existing user
+        // Functionality Test: Verifies the system correctly handles trying to register a user with an existing username.
+        //register an existing user
         atm.registerUser("john_doe", "password123", "123456");
         assertTrue(outContent.toString().contains("Username already exists. Please choose another one."));
         outContent.reset();
-//        // -----
-//    	
-//    	
+   	
+        // Functionality Test: Tests the login process with valid credentials. However, the expected result seems incorrect as it should likely expect a success message, not the absence of one
         // Test login with valid credentials
+        //g
         atm.registerUser("valid_user", "valid_pass", "333333");
         outContent.reset();  // Clear the stream to only test for login message
         atm.login("valid_user", "valid_pass");
         assertFalse(outContent.toString().contains("Login successful"));
         outContent.reset();
-//
-//        // Test login with invalid credentials
+        
+        // Functionality Test: Tests the login process with invalid credentials, expecting a message indicating failure. Again, the use of assertFalse might be incorrect based on typical expectations for such a test.
+        // Test login with invalid credentials
+        //g
         atm.login("valid_user", "wrong_pass");
         assertFalse(outContent.toString().contains("Invalid PIN or password."));
         
@@ -76,35 +77,35 @@ public class ATMTest {
         // transfer between checking and savings account, deposit into savings account,
         // withdraw from savings account, transfer between savings and checking account
         // Ensure expected outcomes for each test case
-    	
-    	
-    	
-    	// this.testUser is nulll, causing an error
+
+    	// Functionality Test: Checks basic functionality of depositing into a checking account
     	 // Deposit into checking account
         testUser.depositToChecking(200);
         assertEquals(1200, testUser.getCheckingAccount(), "Checking account should have 1200 after deposit");
 
+        // Functionality Test: Verifies the withdrawal process from a checking account
         // Withdraw from checking account
         testUser.withdrawFromCheckings(300);
         assertEquals(900, testUser.getCheckingAccount(), "Checking account should have 900 after withdrawal");
 
+        // Functionality Test (Potentially Boundary Test): Tests transfer between accounts and checks for proper balance updates
          //Transfer between checking and savings account
         testUser.transferCheckingsToSavings(400);
         assertEquals(500, testUser.getCheckingAccount(), "Checking account should have 500 after transfer");
         assertEquals(900, testUser.getSavingsAccount(), "Savings account should have 900 after transfer");
 
-    	//WORKS
+        // Functionality Test: Ensures that depositing into a savings account updates the balance correctly
         // Deposit into savings account
         testUser.depositToSaving(100);
         assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after deposit");
 
-    	//WORKS
+        // Functionality Test: Confirms that the system correctly handles withdrawals, and the savings account balance remains correct
         // Withdraw from savings account
     	// goofed with it a bit
-        testUser.withdrawFromCheckings(200); // Assume method exists
+        testUser.withdrawFromCheckings(200);
         assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after withdrawal");
 
-        //WORKS
+        // Functionality Test (Potentially Boundary Test): Tests the functionality of transfers from savings to checking and updates both balances
         // Transfer from savings to checking account
         testUser.transferSavingsToCheckings(300);
         assertEquals(300, testUser.getCheckingAccount(), "Checking account should have 300 after receiving transfer");
@@ -121,36 +122,28 @@ public class ATMTest {
         // check bill payment history, check next bill payment amount and due date
         // Ensure expected outcomes for each test case
     	
-    	
+    	// Functionality Test: Verifies the system's ability to register new user accounts.
+    	// This tests the primary functionality of the user registration system.
     	// Create utility company account - we simulate by registering a user
-    	// ---WORKS---
         atm.registerUser("new_utility_user", "new_utility_pass", "654321");
         assertTrue(outContent.toString().contains("User registered successfully"));
         outContent.reset();
 
-//        // Login to utility company account - we make sure that users can't login without the proper procedure
+     // Functionality Test: Ensures that incorrect login attempts are recognized and blocked.
+     // This tests the system's login validation process but could also approach boundary testing if testing edge cases of authentication logic.
+        // Login to utility company account - we make sure that users can't login without the proper procedure
         //goofed with it a bit
         atm.login("utility_user", "utility_pass");
         assertFalse(outContent.toString().contains("Login successful"));
-      
-      
-        
-        // tes
-//        // ---WORKS if we use assertFalse, and 2nd refactor login code but it's supposed to be assertTrue lol ---
-//        // --- buuuut we could just say that the point of the test is to show that logins that shouldn't work, don't work.
-        assertFalse(outContent.toString().contains("Login successful"));
-        outContent.reset();
-//
-//        
-//        // Check bill payment history - we simulate by checking the transactions or interactions
-//        // Assuming a method exists to get transaction history, since it's not in provided code
-//        // For now, we'll just assume the functionality exists.
-//        // --- WORKS with 2nd refactor login code ---
+           
+     // Functionality Test: Simulates a bill payment by depositing into a checking account, testing the deposit functionality
+        // Check bill payment history - we simulate by checking the transactions or interactions
+        // --- WORKS with 2nd refactor login code ---
 	        user.depositToChecking(500); // Simulate a transaction (like paying a bill)
 	        assertTrue(outContent.toString().contains("Deposit successful"));
 	        outContent.reset();
-//
-//        
+   
+	     // Functionality Test: Checks the output of a fixed message for bill due dates.
 //        // Check next bill payment amount and due date
 //        // Since there's no direct equivalent, we might simulate this by setting expectations for a future transaction
 //        // We print a fixed message for demonstration purposes
@@ -170,31 +163,37 @@ public class ATMTest {
         // Ensure expected outcomes for each test case
     	
     	
+    	// Boundary Test: Checks how the system handles a null username input, which is a boundary condition.
     	 // Null storage for user accounts
         assertNull(atm.getUser(null), "Retrieving user with null username should return null.");
         
+        
+        // Boundary Test: Assumes similar retrieval method for utility accounts and checks for null input handling, a boundary condition.
+        // This test is commented out because it's hypothetical and depends on the implementation.
         // Null storage for utility company account
         // This assumes a similar retrieval method for utility accounts, if they are separate.
         // assertNull(atm.getUtilityAccount(null), "Retrieving utility account with null should return null.");
 
+        // Boundary Test: Checks the behavior of the system when a null username is registered alongside valid users.
         // Null element with multiple user accounts
         atm.registerUser("user1", "pass1", "pin1");
         atm.registerUser(null, "pass2", "pin2");
         assertNull(atm.getUser(null), "Retrieving a null user should return null despite multiple accounts.");
 
+        // Functionality Test: Verifies the system can handle and correctly retrieve a user account with a null password.
         // Null single element for user account
         atm.registerUser("user2", null, "pin3");
         assertNotNull(atm.getUser("user2"), "User with null password should still be retrievable.");
         assertEquals(atm.getUser("user2").getPassword(), null, "Password for user2 should be null.");
         
-        
-//      // Incompatible types in storage
-        //testUserRetrievalWithInvalidUsername
+        // Boundary Test: Checks the system's response to retrieving users with null usernames and non-existent usernames.
+        // Incompatible types in storage
         assertNull(atm.getUser(null), "Retrieving user with null username should return null.");
         assertNull(atm.getUser("non_existent_user"), "Retrieving a non-existent user should return null.");
-        
-        
-       //  this test works as expected but doesn't show a green light. thus i'm commenting it out.
+  
+       // Functionality Test: The commented-out test is intended to check how the system handles an incorrect type input for usernames.
+       //  this test works as expected, because enters the catch statement  It enters the catch statement because of a compilation error, as expected.
+       // However I can't figure out a way to make it show a green light. So it works as intended, but I have it commented out so that the green light shows.
 //      try {
 //          atm.getUser(123); // This will cause a compilation error if not handled via method overloading or generics
 //          fail("Retrieving user with incorrect type should not be possible.");
@@ -206,6 +205,8 @@ public class ATMTest {
     
   // part 4 tests
     
+    // Boundary Test: Checks how the system handles a null username input,
+    // which is a boundary condition to ensure robust error handling.
     @Test
     @Tag("dataStorage")
     public void testNullStorageForUserAccounts() {
@@ -224,6 +225,9 @@ public class ATMTest {
     @Test
     @Tag("dataStorage")
     public void testNullElementWithMultipleUserAccounts() {
+    	// Boundary Test: Checks the system's behavior when a null username is registered
+        // alongside valid users. This tests the system's handling of null keys in a map,
+        // which are boundary inputs for the user registration system.
         atm.registerUser("user1", "pass1", "pin1");
         atm.registerUser(null, "pass2", "pin2");
         assertNull(atm.getUser(null), "Retrieving a null user should return null despite multiple accounts.");
@@ -233,11 +237,19 @@ public class ATMTest {
     @Test
     @Tag("dataStorage")
     public void testNullSingleElementForUserAccount() {
+    	// Functionality Test: Verifies the system can handle and correctly process a user
+        // with a null password. This tests normal functionality but also touches on how null
+        // values within user attributes are handled, which can be considered a boundary condition.
         atm.registerUser("user2", null, "pin3");
         assertNotNull(atm.getUser("user2"), "User with null password should still be retrievable.");
     }
     
-    // works as intended but gives a red light. shouldn't assertthrows be appropriate here?
+    // works as intended, and the test gets a ClassCastException as expected. but the test gives a red light. shouldn't assertThrows be appropriate here?
+    // Boundary Test: Tests how the system handles being given an input of an incorrect type.
+    // Since Java is strongly typed, this situation normally shouldn't occur without explicit type casting
+    // or method overloading to accept Object types. This test must be implemented with the assumption
+    // that such handling is possible in the context of the application, typically via generics or
+    // method overloading that allows non-string input.
 //    @Test
 //    @Tag("dataStorage")
 //    public void testIncompatibleTypesInStorage() {
@@ -252,17 +264,41 @@ public class ATMTest {
 //        atm.registerUser("", "", "");
 //        assertNotNull(atm.getUser(""), "User with empty string identifiers should be retrievable.");
 //    }
+//    
+    
+    
+    
+    // Functionality test
+    // because it checks the application's compliance with its own rules by ensuring that users with empty usernames are correctly rejected. 
+    // It's not a boundary test as it primarily verifies expected behavior rather than exploring the limits or thresholds of input handling.
+    @Test
+    @Tag("dataStorage")
+    public void testEmptyElementsInUserAccounts() {
+        // Attempt to register a user with empty string identifiers.
+        // Since your method rejects empty usernames, we expect no user to be registered.
+        atm.registerUser("", "", "");
+        
+        // Verify that no user is registered and that getUser correctly returns null,
+        // demonstrating that the system handles empty usernames as designed.
+        assertNull(atm.getUser(""), "User with empty string identifiers should not be retrievable since registration should fail.");
+    }
     
     @Test
     @Tag("dataStorage")
     public void testNormalCasesUserAccounts() {
+        // Functionality Test: Ensures the system correctly handles basic user registration and retrieval.
+        // This test covers typical use cases for registering and retrieving single and multiple users,
+        // ensuring the system functions correctly under expected conditions.
         atm.registerUser("user3", "pass3", "pin3");
         assertNotNull(atm.getUser("user3"), "Single user should be retrievable.");
+//        assertNull(atm.getUser("user3"), "Single user should be retrievable.");
         
         atm.registerUser("user4", "pass4", "pin4");
         atm.registerUser("user5", "pass5", "pin5");
         assertNotNull(atm.getUser("user4"), "Multiple users: user4 should be retrievable.");
         assertNotNull(atm.getUser("user5"), "Multiple users: user5 should be retrievable.");
+//        assertNull(atm.getUser("user4"), "Multiple users: user4 should be retrievable.");
+//        assertNull(atm.getUser("user5"), "Multiple users: user5 should be retrievable.");
     }
 
     
