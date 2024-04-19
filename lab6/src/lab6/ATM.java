@@ -1,15 +1,30 @@
 package lab6;
 import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 //Main ATM class
 public class ATM {
 	 private Map<String, User> users;
-	 private static BankAccount checkingAccount;
-	 private static BankAccount savingAccount;
+	 public static BankAccount checkingAccount;
+	 public static BankAccount savingAccount;
 	 // Constructor to initialize the ATM with an empty user map
 	 public ATM() {
 	     this.users = new HashMap<>();
- }
+	     checkingAccount = new BankAccount(100,500,500);
+	     savingAccount = new BankAccount(100,200,200);
+	 }	
 // Method to register a new user
 // public void registerUser(String username, String password,String pin) {
 //     if (!users.containsKey(username)) {
@@ -104,7 +119,7 @@ public class ATM {
 	 String input;
 	 Scanner userInput = new Scanner(System.in);
 	 
-	 System.out.println("Checkings(c) \n Savings(s) \n Logout(l)");
+	 System.out.println("Checkings(c) \n Savings(s) \n");
 	 input = userInput.nextLine();
 	 
 	
@@ -114,12 +129,76 @@ public class ATM {
 		 }
 		 else if (input.equals("s")) {
 			 savingsFunctionality(savingAccount);// go to saving functionality
-		 }
-		 
-		 System.out.println("\n Checkings(c) \n Savings(s) \n Logout(l)");
+		 } 
+		 System.out.println("\n Checkings(c) \n Savings(s) \n");
 		 input = userInput.nextLine();
 	 }
  }
+ 
+ 
+ 
+ 
+//Utility method to add a new account to a JSON file
+ public static void addAccountToJsonFile(String newAccountJson) {
+     String jsonFilePath = "src/lab6/data.json";
+     try {
+         // Write the provided newAccountJson string to the file, overwriting existing content
+         try (FileWriter fileWriter = new FileWriter(jsonFilePath)) {
+             fileWriter.write(newAccountJson);
+         }
+         System.out.println("Account added to JSON file successfully.");
+     } catch (IOException e) {
+         System.err.println("Failed to update JSON file: " + e.getMessage());
+     }
+ }
+ 
+ 
+
+ 
+// / Method to load utility company accounts from a JSON file
+ public static void loadAccountsFromJsonFile(BankAccount userBankAccount) {
+     // Define the path to your JSON file
+     String jsonFilePath = "src/lab6/data.json";
+
+     try (BufferedReader reader = new BufferedReader(new FileReader(jsonFilePath))) {
+         StringBuilder jsonData = new StringBuilder();
+         String line;
+         while ((line = reader.readLine()) != null) {
+             jsonData.append(line);
+         }
+         
+         // Convert StringBuilder to String
+         String jsonString = jsonData.toString();
+         
+         // Define a pattern to match the "amountDue" value
+         String pattern = "\"amountDue\": \"(\\d+(\\.\\d+)?)\"";
+         
+         double newAmount =  50 - userBankAccount.getBalance() ;
+         if (newAmount < 0) {
+        	 newAmount = 0 ;
+        	 userBankAccount.withdraw(50);
+         }
+         else{
+        	 newAmount = 50 - userBankAccount.getBalance();
+        	 userBankAccount.withdraw(newAmount);
+         }
+         
+         // Replace the "amountDue" value with the new value
+         String modifiedJson = jsonString.replaceAll(pattern, "\"amountDue\": \"" + newAmount + "\"");
+         System.out.println(modifiedJson);
+         addAccountToJsonFile(modifiedJson);
+         
+         
+     } catch (IOException e) {
+         e.printStackTrace();
+     }
+ }
+ 
+ 
+ public static void payBill(BankAccount userBankAccount){
+	 loadAccountsFromJsonFile(userBankAccount);
+ }
+ 
 // Method to handle savings account operations
 public static void savingsFunctionality(BankAccount userBankAccount) {
 	String input;
@@ -166,6 +245,7 @@ public static void checkingsFunctionality(BankAccount userBankAccount) {
 	System.out.println("Withdraw(w)");
 	System.out.println("Transfer(t)");
 	System.out.println("Get balance(b)");
+	System.out.println("Pay Bills(p)");
 	
 	input = userInput.nextLine();//get user input 
 	switch(input) {
@@ -196,6 +276,9 @@ public static void checkingsFunctionality(BankAccount userBankAccount) {
 		System.out.println("get balance \n");
 		System.out.println(userBankAccount.getBalance());
 		break;
+	case "p":
+		payBill(userBankAccount);
+		System.out.println("bill payed");
 	default:
 		System.out.println("Try again");
 	}

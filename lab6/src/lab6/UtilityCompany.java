@@ -28,20 +28,16 @@ public class UtilityCompany {
     public static void addAccountToJsonFile(String userName, String password, String pin, String amountDue) {
         String jsonFilePath = "src/lab6/data.json";
         try {
-            // Read existing data into a string
-            String jsonContent = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
-            // Assume jsonContent looks like '[...]' where ... represents existing JSON objects
-            String newAccountJson = String.format("\n{\n\"username\": \"%s\", \n\"password\": \"%s\", \n\"pin\": \"%s\", \n\"amountDue\": \"%s\" \n}\n", userName, password, pin,amountDue);
-            // Properly format the JSON by removing the last ']' and appending the new account JSON followed by ']'
-            String updatedJsonContent = jsonContent.substring(0, jsonContent.length() - 2) + (jsonContent.length() > 2 ? ", " : "") + newAccountJson +"]";
-            // Write updated JSON back to file
+            // Write the provided newAccountJson string to the file, overwriting existing content
             try (FileWriter fileWriter = new FileWriter(jsonFilePath)) {
-                fileWriter.write(updatedJsonContent);
+                fileWriter.write(String.format("\n{\n\"username\": \"%s\", \n\"password\": \"%s\", \n\"pin\": \"%s\", \n\"amountDue\": \"%s\" \n}\n", userName, password, pin,amountDue));
             }
             System.out.println("Account added to JSON file successfully.");
         } catch (IOException e) {
             System.err.println("Failed to update JSON file: " + e.getMessage());
         }
+            String newAccountJson = String.format("\n{\n\"username\": \"%s\", \n\"password\": \"%s\", \n\"pin\": \"%s\", \n\"amountDue\": \"%s\" \n}\n", userName, password, pin,amountDue);
+           
     }
 
     // Method to load utility company accounts from a JSON file
