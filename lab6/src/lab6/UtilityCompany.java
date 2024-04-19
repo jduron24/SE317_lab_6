@@ -23,6 +23,9 @@ public class UtilityCompany {
         this.accounts = new HashMap<>();
         
     }
+    public static Map<String, UtilityAccountInfo> getAccounts() {
+        return accounts;
+    }
     
     // Utility method to add a new account to a JSON file
     public static void addAccountToJsonFile(String userName, String password, String pin, String amountDue) {

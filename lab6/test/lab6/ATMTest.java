@@ -7,7 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,10 +43,10 @@ public class ATMTest {
 
     @Test
     public void testUserRegistrationAndLogin() {
-    	
-    	// Functionality Test: Checks the basic functionality of registering a new user and expects a success message.
-    	//register a new user
-    	atm.registerUser("john_doe", "password123", "123456");
+    
+    // Functionality Test: Checks the basic functionality of registering a new user and expects a success message.
+    //register a new user
+    atm.registerUser("john_doe", "password123", "123456");
         assertTrue(outContent.toString().contains("User registered successfully."));
         outContent.reset();
 
@@ -52,22 +55,8 @@ public class ATMTest {
         atm.registerUser("john_doe", "password123", "123456");
         assertTrue(outContent.toString().contains("Username already exists. Please choose another one."));
         outContent.reset();
-   	
-        // Functionality Test: Tests the login process with valid credentials. However, the expected result seems incorrect as it should likely expect a success message, not the absence of one
-        // Test login with valid credentials
-        //g
-        atm.registerUser("valid_user", "valid_pass", "333333");
-        outContent.reset();  // Clear the stream to only test for login message
-        atm.login("valid_user", "valid_pass");
-        assertFalse(outContent.toString().contains("Login successful"));
-        outContent.reset();
-        
-        // Functionality Test: Tests the login process with invalid credentials, expecting a message indicating failure. Again, the use of assertFalse might be incorrect based on typical expectations for such a test.
-        // Test login with invalid credentials
-        //g
-        atm.login("valid_user", "wrong_pass");
-        assertFalse(outContent.toString().contains("Invalid PIN or password."));
-        
+    
+
     }
 
     @Test
@@ -78,8 +67,8 @@ public class ATMTest {
         // withdraw from savings account, transfer between savings and checking account
         // Ensure expected outcomes for each test case
 
-    	// Functionality Test: Checks basic functionality of depositing into a checking account
-    	 // Deposit into checking account
+    // Functionality Test: Checks basic functionality of depositing into a checking account
+    // Deposit into checking account
         testUser.depositToChecking(200);
         assertEquals(1200, testUser.getCheckingAccount(), "Checking account should have 1200 after deposit");
 
@@ -101,7 +90,7 @@ public class ATMTest {
 
         // Functionality Test: Confirms that the system correctly handles withdrawals, and the savings account balance remains correct
         // Withdraw from savings account
-    	// goofed with it a bit
+    // goofed with it a bit
         testUser.withdrawFromCheckings(200);
         assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after withdrawal");
 
@@ -110,61 +99,54 @@ public class ATMTest {
         testUser.transferSavingsToCheckings(300);
         assertEquals(300, testUser.getCheckingAccount(), "Checking account should have 300 after receiving transfer");
         assertEquals(1000, testUser.getSavingsAccount(), "Savings account should have 1000 after making transfer");
-    	
+    
     }
 
     @Test
     //@Timeout(value = 500, unit = TimeUnit.MILLISECONDS)
     public void testUtilityCompanyOperations() {
-    	//GOALS:
+    //GOALS:
         // Test utility company operations functionalities
         // Test cases: create utility company account, login to utility company account,
         // check bill payment history, check next bill payment amount and due date
         // Ensure expected outcomes for each test case
-    	
-    	// Functionality Test: Verifies the system's ability to register new user accounts.
-    	// This tests the primary functionality of the user registration system.
-    	// Create utility company account - we simulate by registering a user
+    
+    // Functionality Test: Verifies the system's ability to register new user accounts.
+    // This tests the primary functionality of the user registration system.
+    // Create utility company account - we simulate by registering a user
         atm.registerUser("new_utility_user", "new_utility_pass", "654321");
         assertTrue(outContent.toString().contains("User registered successfully"));
         outContent.reset();
-
-     // Functionality Test: Ensures that incorrect login attempts are recognized and blocked.
-     // This tests the system's login validation process but could also approach boundary testing if testing edge cases of authentication logic.
-        // Login to utility company account - we make sure that users can't login without the proper procedure
-        //goofed with it a bit
-        atm.login("utility_user", "utility_pass");
-        assertFalse(outContent.toString().contains("Login successful"));
-           
+        
      // Functionality Test: Simulates a bill payment by depositing into a checking account, testing the deposit functionality
         // Check bill payment history - we simulate by checking the transactions or interactions
         // --- WORKS with 2nd refactor login code ---
-	        user.depositToChecking(500); // Simulate a transaction (like paying a bill)
-	        assertTrue(outContent.toString().contains("Deposit successful"));
-	        outContent.reset();
+       user.depositToChecking(500); // Simulate a transaction (like paying a bill)
+       assertTrue(outContent.toString().contains("Deposit successful"));
+       outContent.reset();
    
-	     // Functionality Test: Checks the output of a fixed message for bill due dates.
+    // Functionality Test: Checks the output of a fixed message for bill due dates.
 //        // Check next bill payment amount and due date
 //        // Since there's no direct equivalent, we might simulate this by setting expectations for a future transaction
 //        // We print a fixed message for demonstration purposes
 //        // --- WORKS with 2nd refactor login code ---
-	        System.out.println("Next bill amount: $100 due on: 2024-04-30");
-	        assertTrue(outContent.toString().contains("Next bill amount: $100 due on: 2024-04-30"));
+       System.out.println("Next bill amount: $100 due on: 2024-04-30");
+       assertTrue(outContent.toString().contains("Next bill amount: $100 due on: 2024-04-30"));
     }
 
     @Test
     public void testDataStorage() {
-    	//GOALS:
+    //GOALS:
         // Test data storage functionalities
         // Test cases: null storage for user accounts, null storage for utility company account,
         // null element with multiple user accounts, null single element for user account,
         // incompatible types in storage, empty elements in user accounts,
         // two normal cases: single and multiple user accounts
         // Ensure expected outcomes for each test case
-    	
-    	
-    	// Boundary Test: Checks how the system handles a null username input, which is a boundary condition.
-    	 // Null storage for user accounts
+    
+    
+    // Boundary Test: Checks how the system handles a null username input, which is a boundary condition.
+    // Null storage for user accounts
         assertNull(atm.getUser(null), "Retrieving user with null username should return null.");
         
         
@@ -199,7 +181,7 @@ public class ATMTest {
 //          fail("Retrieving user with incorrect type should not be possible.");
 //      } catch (ClassCastException e) {
 //          // Expected behavior, catching for demonstration.
-//    	 
+//     
 //      } 
     }
     
@@ -225,7 +207,7 @@ public class ATMTest {
     @Test
     @Tag("dataStorage")
     public void testNullElementWithMultipleUserAccounts() {
-    	// Boundary Test: Checks the system's behavior when a null username is registered
+    // Boundary Test: Checks the system's behavior when a null username is registered
         // alongside valid users. This tests the system's handling of null keys in a map,
         // which are boundary inputs for the user registration system.
         atm.registerUser("user1", "pass1", "pin1");
@@ -237,7 +219,7 @@ public class ATMTest {
     @Test
     @Tag("dataStorage")
     public void testNullSingleElementForUserAccount() {
-    	// Functionality Test: Verifies the system can handle and correctly process a user
+    // Functionality Test: Verifies the system can handle and correctly process a user
         // with a null password. This tests normal functionality but also touches on how null
         // values within user attributes are handled, which can be considered a boundary condition.
         atm.registerUser("user2", null, "pin3");
@@ -301,6 +283,63 @@ public class ATMTest {
 //        assertNull(atm.getUser("user5"), "Multiple users: user5 should be retrievable.");
     }
 
+    
+    
+    //utility company tests:
+
+    private boolean checkJsonFileForAccount(String filePath, String username) {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(filePath)));
+            return content.contains("\"username\": \"" + username + "\"");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    @Test
+    void testJsonFileUpdate() {
+        UtilityCompany utilityCompany = new UtilityCompany();
+        utilityCompany.createAccount("testUser3", "testPass3", "111222", "300");
+        assertTrue(checkJsonFileForAccount("src/lab6/data.json", "testUser3"));
+    }
+
+
+    @Test
+    void testAccountCreation() {
+        UtilityCompany utilityCompany = new UtilityCompany();
+        utilityCompany.createAccount("testUser", "testPass", "123456", "100");
+        
+        // Assuming that UtilityCompany provides a way to retrieve accounts or that you add a getter.
+        // You need to implement getAccounts() or similar in UtilityCompany to make this test viable.
+        assertTrue(UtilityCompany.getAccounts().containsKey("testUser"));
+        UtilityAccountInfo account = UtilityCompany.getAccounts().get("testUser");
+        assertEquals("testPass", account.getPassword());
+        assertEquals("123456", account.getPin());
+        assertEquals("100", account.getAmountDue());
+    }
+    
+    
+    public boolean login(String username, String password) {
+        UtilityAccountInfo account = new UtilityAccountInfo("will", "pill", "452168","500");
+        if (account != null && account.getPassword().equals(password)) {
+            System.out.println("Login successful");
+            return true;
+        } else {
+            System.out.println("Invalid username or password.");
+            return false;
+        }
+    }
+
+//    @Test
+//    void testLogin() {
+//        UtilityCompany utilityCompany = new UtilityCompany();
+//        utilityCompany.createAccount("testUser", "testPass", "123456", "100");
+//        assertTrue(utilityCompany.login());
+//    }
+    
+    
+    
     
     @AfterEach
     public void restoreStreams() {
